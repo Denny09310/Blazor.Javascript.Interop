@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop;
 
-public class JSLocalStorage(IJSRuntime jsRuntime, IJSObjectReference window) : JSInteropBase, IStorage
+public class JSSessionStorage(IJSRuntime jsRuntime, IJSObjectReference window) : JSInteropBase, IStorage
 {
     public ValueTask ClearAsync() => window.InvokeVoidAsync(GetPropertyPath());
 

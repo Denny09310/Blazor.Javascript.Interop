@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Blazor.Javascript.Interop;
 
-public class JSConsole(IJSRuntime jsRuntime, IJSObjectReference window) : JSInteropBase(jsRuntime, window)
+public class JSConsole(IJSObjectReference window) : JSInteropBase
 {
     public ValueTask AssertAsync(bool condition, params object[] data) => window.InvokeVoidAsync(GetPropertyPath(), condition, data);
 
