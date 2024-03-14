@@ -1,0 +1,89 @@
+﻿@page "/functionalities/local-storage"
+
+<Container Title="Local Storage">
+
+    <h4>Clear</h4>
+    <p>The <b>LocalStorage.ClearAsync()</b> method of the Storage interface clears all keys stored in a given Storage object.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-danger" id="window-local-storage-clear-button" @onclick="ClearAsync">Clear All</button>
+    </div>
+
+    <h4 class="mt-4">Set Item</h4>
+    <p>The <b>LocalStorage.SetItemAsync</b> method of the Storage interface, when passed a key name and value, will add that key to the given Storage object, or update that key's value if it already exists.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-local-storage-set-item-button" @onclick="SetItemAsync">Set Sample Value</button>
+    </div>
+
+    <h4 class="mt-4">Get Item</h4>
+    <p>The <b>LocalStorage.GetItemAsync</b> method of the Storage interface, when passed a key name, will return that key's value, or null if the key does not exist, in the given Storage object.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-local-storage-get-item-button" @onclick="GetItemAsync">Get Sample Value</button>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(value))
+    {
+        <div class="alert alert-info mt-2" role="alert">
+            The value of the key <b>sample-value</b> is "@value"
+        </div>
+    }
+
+    <h4 class="mt-4">Key</h4>
+    <p>The <b>LocalStorage.KeyAsync</b> method of the Storage interface, when passed a number n, returns the name of the nth key in a given Storage object. The order of keys is user-agent defined, so you should not rely on it.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-local-storage-key-button" @onclick="KeyAsync">Get Sample Value</button>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(key))
+    {
+        <div class="alert alert-info mt-2" role="alert">
+            The value of the index <b>0</b> is "@key"
+        </div>
+    }
+
+    <h4 class="mt-4">Remove Item</h4>
+    <p>The <b>LocalStorage.RemoveItemAsync</b> method of the Storage interface, when passed a key name, will remove that key from the given Storage object if it exists. The Storage interface of the Web Storage API provides access to a particular domain's session or local storage.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-danger" id="window-local-storage-remove-item-button" @onclick="RemoveItemAsync">Remove Sample Value</button>
+    </div>
+
+    <h4 class="mt-4">Length</h4>
+    <p>The length read-only property of the Storage interface returns the number of data items stored in a given Storage object.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-local-storage-length-button" @onclick="LengthAsync">Get Length</button>
+    </div>
+
+    @if (length > -1)
+    {
+        <div class="alert alert-info mt-2" role="alert">
+            The length of the LocalStorage is @length
+        </div>
+    }
+
+</Container>
+
+@code
+{
+    private string? value, key;
+    private int length = -1;
+
+    [CascadingParameter]
+    public required JSWindow Window { get; set; }
+
+    private async Task ClearAsync() => await Window.LocalStorage.ClearAsync();
+
+    private async Task SetItemAsync() => await Window.LocalStorage.SetItemAsync("sample-value", "This is a sample value");
+
+    private async Task GetItemAsync() => value = await Window.LocalStorage.GetItemAsync<string>("sample-value");
+
+    private async Task KeyAsync() => key = await Window.LocalStorage.KeyAsync(0);
+
+    private async Task RemoveItemAsync() => await Window.LocalStorage.RemoveItemAsync("sample-value");
+
+    private async Task LengthAsync() => length = await Window.LocalStorage.LengthAsync();
+}

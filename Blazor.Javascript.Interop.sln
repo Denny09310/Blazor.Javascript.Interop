@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{89BB59
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Javascript.Interop", "Blazor.Javascript.Interop\Blazor.Javascript.Interop.csproj", "{685D75F7-0669-4C5A-8B87-D34EBCEEB805}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Javascript.Interop.Tests", "Blazor.Javascript.Interop.Tests\Blazor.Javascript.Interop.Tests.csproj", "{5A9B5DD4-5BFB-4E75-A701-9D3B453441A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Javascript.Interop.Tests", "Blazor.Javascript.Interop.Tests\Blazor.Javascript.Interop.Tests.csproj", "{5A9B5DD4-5BFB-4E75-A701-9D3B453441A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

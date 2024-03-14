@@ -14,4 +14,9 @@ public static class JSRuntimeExtensions
     {
         return jsRuntime.InvokeAsync<IJSObjectReference>("eval", $"window['{identifier}']");
     }
+
+    public static ValueTask<T> GetPropertyAsync<T>(this IJSRuntime jsRuntime, string identifier)
+    {
+        return jsRuntime.InvokeAsync<T>("eval", identifier);
+    }
 }
