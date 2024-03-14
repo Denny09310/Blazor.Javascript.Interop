@@ -1,0 +1,143 @@
+﻿@page "/functionalities/console"
+
+<PageTitle>Console</PageTitle>
+
+<Container Title="Console">
+
+    <div class="alert alert-info" role="alert">
+        All the results are written in the browser console. Press <kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>I</kbd> or <kbd>F12</kbd> to open the console.
+    </div>
+
+    <h4 class="mt-4">Assert</h4>
+    <p>The <b>Console.AssertAsync()</b> method writes an error message to the console if the assertion is false. If the assertion is true, nothing happens.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-primary" id="window-console-assert-true-button" @onclick="() => AssertAsync(true)">With True Statement</button>
+        <button class="btn btn-outline-secondary" id="window-console-assert-false-button" @onclick="() => AssertAsync(false)">With False Statement</button>
+    </div>
+
+    <h4 class="mt-4">Output</h4>
+    <p>These methods output to the console with varius levels with Trace being the lowest and Error the highest</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-console-trace-button" @onclick="() => OutputAsync(LogLevel.Trace)">Trace</button>
+        <button class="btn btn-outline-dark" id="window-console-debug-button" @onclick="() => OutputAsync(LogLevel.Debug)">Debug</button>
+        <button class="btn btn-info" id="window-console-info-button" @onclick="() => OutputAsync(LogLevel.Info)">Info</button>
+        <button class="btn btn-warning" id="window-console-warning-button" @onclick="() => OutputAsync(LogLevel.Warning)">Warning</button>
+        <button class="btn btn-danger" id="window-console-severe-button" @onclick="() => OutputAsync(LogLevel.Severe)">Error</button>
+    </div>
+
+    <h4 class="mt-4">Table</h4>
+    <p>The <b>Console.TableAsync()</b> method displays tabular data as a table.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-console-table-button" @onclick="TableAsync">Table</button>
+    </div>
+    
+    <h4 class="mt-4">Clear</h4>
+    <p>The <b>Console.ClearAsync()</b> method clears the console if the console allows it.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-console-clear-button" @onclick="ClearAsync">Clear</button>
+    </div>
+    
+    <h4 class="mt-4">Count</h4>
+    <p>The <b>Console.CountAsync()</b> method logs the number of times that this particular call to count() has been called.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-console-count-button" @onclick="() => CountAsync()">Count</button>
+        <button class="btn btn-outline-dark" id="window-console-count-reset-button" @onclick="() => CountResetAsync()">Reset Count</button>
+
+        <button class="btn btn-outline-dark" id="window-console-count-with-label-button" @onclick="@(() => CountAsync("timer"))">Count with Label</button>
+        <button class="btn btn-outline-dark" id="window-console-count-reset-with-label-button" @onclick="@(() => CountResetAsync("timer"))">Reset Count with Label</button>
+    </div>
+    
+    <h4 class="mt-4">Group</h4>
+    <p>The <b>Console.GroupAsync()</b> method creates a new inline group in the Web console log, causing any subsequent console messages to be indented by an additional level, until <b>Console.GroupEnd()</b> is called.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-console-group-button" @onclick="GroupAsync">Group</button>
+        <button class="btn btn-outline-dark" id="window-console-group-end-button" @onclick="GroupEndAsync">End Group</button>
+
+    </div>
+    
+    <h4 class="mt-4">Dir</h4>
+    <p>The <b>Console.DirAsync()</b> method displays an interactive list of the properties of the specified JavaScript object. The output is presented as a hierarchical listing with disclosure triangles that let you see the contents of child objects.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-console-dir-button" @onclick="DirAsync">Output</button>
+    </div>
+    
+    <h4 class="mt-4">Time</h4>
+    <p>The <b>Console.TimeAsync()</b> static method starts a timer you can use to track how long an operation takes. You give each timer a unique name, and may have up to 10,000 timers running on a given page. When you call <b>Console.TimeEnd()</b> with the same name, the browser will output the time, in milliseconds, that elapsed since the timer was started.</p>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark" id="window-console-time-button" @onclick="TimeAsync">Start Time</button>
+        <button class="btn btn-outline-dark" id="window-console-time-log-button" @onclick="TimeLogAsync">Log Time</button>
+        <button class="btn btn-outline-dark" id="window-console-time-end-button" @onclick="TimeEndAsync">End Time</button>
+    </div>
+
+</Container>
+
+@code
+{
+    private int groupLevel = 1;
+
+    [CascadingParameter]
+    public required JSWindow Window { get; set; }
+
+    private async Task AssertAsync(bool condition) => await Window.Console.AssertAsync(condition);
+
+    private async Task OutputAsync(LogLevel level)
+    {
+        switch (level)
+        {
+            case LogLevel.Trace:
+                await Window.Console.TraceAsync("This is a trace message");
+                break;
+            case LogLevel.Debug:
+                await Window.Console.DebugAsync("This is a debug message");
+                break;
+            case LogLevel.Info:
+                await Window.Console.InfoAsync("This is an info message");
+                break;
+            case LogLevel.Warning:
+                await Window.Console.WarnAsync("This is a warning message");
+                break;
+            case LogLevel.Severe:
+                await Window.Console.ErrorAsync("This is an error message");
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
+    private async Task TableAsync() => await Window.Console.TableAsync(new[] { "apples", "oranges", "bananas" });
+
+    private async Task ClearAsync() => await Window.Console.ClearAsync();
+
+    private async Task CountAsync(string? label = default) => await Window.Console.CountAsync(label); 
+
+    private async Task CountResetAsync(string? label = default) => await Window.Console.CountResetAsync(label); 
+
+    private async Task GroupAsync() => await Window.Console.GroupAsync($"Group Level: {groupLevel++}");
+
+    private async Task GroupEndAsync() => await Window.Console.GroupEndAsync($"Group Level: {groupLevel--}");
+
+    private async Task DirAsync() => await Window.Console.DirAsync(new { Property = "This is a property of the object" });
+
+    private async Task TimeAsync() => await Window.Console.TimeAsync();
+
+    private async Task TimeLogAsync() => await Window.Console.TimeLogAsync();
+
+    private async Task TimeEndAsync() => await Window.Console.TimeEndAsync();
+
+    private enum LogLevel
+    {
+        Trace,
+        Debug,
+        Info,
+        Warning,
+        Severe
+    }
+}

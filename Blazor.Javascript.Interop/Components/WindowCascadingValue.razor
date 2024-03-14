@@ -1,0 +1,22 @@
+@inject IJSRuntime JSRuntime
+
+<CascadingValue Value="window">
+    @ChildContent
+</CascadingValue>
+
+@code
+{
+    private JSWindow window = default!;
+
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            window = await JSRuntime.GetWindowAsync();
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+}
