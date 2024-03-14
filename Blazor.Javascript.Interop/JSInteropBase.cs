@@ -1,9 +1,8 @@
-﻿using Microsoft.JSInterop;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace Blazor.Javascript.Interop;
 
-public abstract class JSInteropBase(IJSRuntime _, IJSObjectReference __)
+public abstract class JSInteropBase
 {
     protected static string GetPropertyPath([CallerFilePath] string? className = default!, [CallerMemberName] string? methodName = default!)
     {
