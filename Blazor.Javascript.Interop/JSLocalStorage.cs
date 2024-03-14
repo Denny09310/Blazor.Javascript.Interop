@@ -13,4 +13,6 @@ public class JSLocalStorage(IJSRuntime jsRuntime, IJSObjectReference window) : J
     public ValueTask RemoveItemAsync(string keyName) => window.InvokeVoidAsync(GetPropertyPath(), keyName);
 
     public ValueTask SetItemAsync<T>(string keyName, T keyValue) => window.InvokeVoidAsync(GetPropertyPath(), keyName, keyValue);
+
+    public ValueTask<int> LengthAsync() => jsRuntime.GetPropertyAsync<int>(GetPropertyPath());
 }
