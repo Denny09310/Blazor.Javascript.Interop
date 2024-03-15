@@ -5,43 +5,45 @@ namespace Blazor.Javascript.Interop;
 
 public class JSConsole(IJSObjectReference window) : JSInteropBase
 {
-    public ValueTask AssertAsync(bool condition, params object[] data) => window.InvokeVoidAsync(GetPropertyPath(), condition, data);
+    private const string _propertyName = "console";
 
-    public ValueTask AssertAsync(bool condition, string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(), condition, string.Format(CultureInfo.InvariantCulture, message, substitution));
+    public ValueTask AssertAsync(bool condition, params object[] data) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "assert"), condition, data);
 
-    public ValueTask ClearAsync() => window.InvokeVoidAsync(GetPropertyPath());
+    public ValueTask AssertAsync(bool condition, string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "assert"), condition, string.Format(CultureInfo.InvariantCulture, message, substitution));
 
-    public ValueTask CountAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath()) : window.InvokeVoidAsync(GetPropertyPath(), label);
+    public ValueTask ClearAsync() => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "clear"));
 
-    public ValueTask CountResetAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath()) : window.InvokeVoidAsync(GetPropertyPath(), label);
+    public ValueTask CountAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath(_propertyName, "count")) : window.InvokeVoidAsync(GetPropertyPath(_propertyName), label);
 
-    public ValueTask DebugAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(), string.Format(CultureInfo.InvariantCulture, message, substitution));
+    public ValueTask CountResetAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath(_propertyName, "countReset")) : window.InvokeVoidAsync(GetPropertyPath(_propertyName), label);
 
-    public ValueTask DirAsync(object obj) => window.InvokeVoidAsync(GetPropertyPath(), obj);
+    public ValueTask DebugAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "debug"), string.Format(CultureInfo.InvariantCulture, message, substitution));
 
-    public ValueTask DirxmlAsync(object obj) => window.InvokeVoidAsync(GetPropertyPath(), obj);
+    public ValueTask DirAsync(object obj) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "dir"), obj);
 
-    public ValueTask ErrorAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(), string.Format(CultureInfo.InvariantCulture, message, substitution));
+    public ValueTask DirXmlAsync(object obj) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "dirxml"), obj);
 
-    public ValueTask GroupAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath()) : window.InvokeVoidAsync(GetPropertyPath(), label);
+    public ValueTask ErrorAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "error"), string.Format(CultureInfo.InvariantCulture, message, substitution));
 
-    public ValueTask GroupCollapsedAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath()) : window.InvokeVoidAsync(GetPropertyPath(), label);
+    public ValueTask GroupAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath(_propertyName, "group")) : window.InvokeVoidAsync(GetPropertyPath(_propertyName), label);
 
-    public ValueTask GroupEndAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath()) : window.InvokeVoidAsync(GetPropertyPath(), label);
+    public ValueTask GroupCollapsedAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath(_propertyName, "groupCollapsed")) : window.InvokeVoidAsync(GetPropertyPath(_propertyName), label);
 
-    public ValueTask InfoAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(), string.Format(CultureInfo.InvariantCulture, message, substitution));
+    public ValueTask GroupEndAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath(_propertyName, "groupEnd")) : window.InvokeVoidAsync(GetPropertyPath(_propertyName), label);
 
-    public ValueTask LogAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(), string.Format(CultureInfo.InvariantCulture, message, substitution));
+    public ValueTask InfoAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "info"), string.Format(CultureInfo.InvariantCulture, message, substitution));
 
-    public ValueTask TableAsync(object data) => window.InvokeVoidAsync(GetPropertyPath(), data);
+    public ValueTask LogAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "log"), string.Format(CultureInfo.InvariantCulture, message, substitution));
 
-    public ValueTask TimeAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath()) : window.InvokeVoidAsync(GetPropertyPath(), label);
+    public ValueTask TableAsync(object data) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "table"), data);
 
-    public ValueTask TimeEndAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath()) : window.InvokeVoidAsync(GetPropertyPath(), label);
+    public ValueTask TimeAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath(_propertyName, "time")) : window.InvokeVoidAsync(GetPropertyPath(_propertyName), label);
 
-    public ValueTask TimeLogAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath()) : window.InvokeVoidAsync(GetPropertyPath(), label);
+    public ValueTask TimeEndAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath(_propertyName, "timeEnd")) : window.InvokeVoidAsync(GetPropertyPath(_propertyName), label);
 
-    public ValueTask TraceAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(), string.Format(CultureInfo.InvariantCulture, message, substitution));
+    public ValueTask TimeLogAsync(string? label = default) => string.IsNullOrEmpty(label) ? window.InvokeVoidAsync(GetPropertyPath(_propertyName, "timeLog")) : window.InvokeVoidAsync(GetPropertyPath(_propertyName), label);
 
-    public ValueTask WarnAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(), string.Format(CultureInfo.InvariantCulture, message, substitution));
+    public ValueTask TraceAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "trace"), string.Format(CultureInfo.InvariantCulture, message, substitution));
+
+    public ValueTask WarnAsync(string message, params object[] substitution) => window.InvokeVoidAsync(GetPropertyPath(_propertyName, "warn"), string.Format(CultureInfo.InvariantCulture, message, substitution));
 }

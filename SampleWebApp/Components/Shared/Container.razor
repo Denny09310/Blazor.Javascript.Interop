@@ -2,7 +2,10 @@
 
 <div class="d-flex flex-column">
     <div class="border-bottom mb-4">
-        <h2>@Title</h2>
+        <div class="d-flex align-items-center gap-4">
+            <h2>@Title</h2>
+            @AdditionalRightContent
+        </div>
 
         @if (!string.IsNullOrWhiteSpace(Overview))
         {
@@ -23,4 +26,7 @@
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? AdditionalRightContent { get; set; }
 }
