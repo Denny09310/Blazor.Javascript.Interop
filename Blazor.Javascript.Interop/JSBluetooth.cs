@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop;
 
-public class JSBluetooth(IJSObjectReference parent) : JSInteropBase(parent, "bluetooth")
+public class JSBluetooth(IJSObjectReference navigator) : JSInteropBase(navigator, "bluetooth")
 {
     public ValueTask<bool> GetAvailabiltyAsync() => InvokeAsync<bool>("getAvailability");
 

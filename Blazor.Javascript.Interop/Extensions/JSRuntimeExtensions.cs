@@ -7,7 +7,7 @@ public static class JSRuntimeExtensions
     public static async ValueTask<JSWindow> GetWindowAsync(this IJSRuntime jsRuntime)
     {
         var window = await jsRuntime.GetReferenceAsync("self");
-        return new JSWindow(jsRuntime, window);
+        return new JSWindow(window);
     }
 
     public static ValueTask<IJSObjectReference> GetReferenceAsync(this IJSRuntime jsRuntime, string identifier)
