@@ -99,13 +99,13 @@
                 await Window.Console.DebugAsync("This is a debug message");
                 break;
             case LogLevel.Info:
-                await Window.Console.InfoAsync("This is an info message");
+                await Window.Console.InfoAsync("This is a info message");
                 break;
             case LogLevel.Warning:
                 await Window.Console.WarnAsync("This is a warning message");
                 break;
             case LogLevel.Severe:
-                await Window.Console.ErrorAsync("This is an error message");
+                await Window.Console.ErrorAsync("This is a severe message");
                 break;
             default:
                 throw new NotImplementedException();
