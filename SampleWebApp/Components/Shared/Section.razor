@@ -1,0 +1,47 @@
+﻿@namespace SampleWebApp.Components
+
+<section>
+    <div class="d-flex align-items-center">
+
+        @if (!string.IsNullOrEmpty(Href))
+        {
+            <NavLink href="@Href"><h4>@Title</h4></NavLink>
+        }
+        else
+        {
+            <h4>@Title</h4>
+        }
+
+        @Icons
+
+    </div>
+
+    <p>@RenderedOverview</p>
+
+    <div class="d-flex gap-2">
+        @(ChildContent ?? Content)
+    </div>
+</section>
+
+@code
+{
+    [Parameter, EditorRequired]
+    public required string Title { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
+
+    [Parameter]
+    public string? Overview { get; set; }
+
+    [Parameter]
+    public RenderFragment? Icons { get; set; }
+
+    [Parameter]
+    public RenderFragment? Content { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    protected MarkupString? RenderedOverview => !string.IsNullOrEmpty(Overview) ? (MarkupString)Overview : default;
+}

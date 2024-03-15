@@ -1,3 +1,11 @@
 ﻿@namespace SampleWebApp.Components
 
-<i class="fa fa-shield fa-xs text-info" title="This fteature require secure context" />
+<i class="fa fa-shield @IconSize text-info" title="This fteature require secure context" />
+
+@code
+{
+    [Parameter]
+    public string? Size { get; set; }
+
+    protected string IconSize => $"fa-{Size ?? "xs"}";
+}

@@ -17,7 +17,7 @@ public class ConsoleTest : IClassFixture<WebDriverFixture>
         _driver = webDriverFixture.Driver;
         _blazorHelper = new BlazorHelper(_driver, TimeSpan.FromSeconds(10));
 
-        _driver.Navigate().GoToUrl("http://localhost:5292/functionalities/console");
+        _driver.Navigate().GoToUrl("http://localhost:5292/features/console");
 
         _blazorHelper.WaitForBlazorInitialization();
         _blazorHelper.ClearBlazorConsole();
@@ -97,16 +97,15 @@ public class ConsoleTest : IClassFixture<WebDriverFixture>
         return (bool)((IJavaScriptExecutor)driver).ExecuteScript("""
             var elem = arguments[0],
                 box = elem.getBoundingClientRect(),
-                cx = box.left + box.width / 2, 
+                cx = box.left + box.width / 2,
                 cy = box.top + box.height / 2,
                 e = document.elementFromPoint(cx, cy);
 
             for (; e; e = e.parentElement) {
-                if (e === elem) return true; 
+                if (e === elem) return true;
             }
 
             return false;
-            """ , element);
+            """, element);
     }
 }
-
