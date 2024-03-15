@@ -1,0 +1,27 @@
+[
+  {
+    "label": "Home",
+    "icon": "fa fa-home",
+    "href": ""
+  },
+  {
+    "label": "Console",
+    "icon": "fa fa-terminal",
+    "href": "functionalities/console"
+  },
+  {
+    "label": "Storages",
+    "icon": "fa fa-hard-drive",
+    "href": "functionalities/storage"
+  },
+  {
+    "label": "Navigator",
+    "icon": "fa fa-map",
+    "href": "functionalities/navigator"
+  },
+  {
+    "label": "Bluetooth",
+    "icon": "fa-brands fa-bluetooth",
+    "href": "functionalities/bluetooth"
+  }
+]

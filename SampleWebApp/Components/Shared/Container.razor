@@ -2,10 +2,14 @@
 
 <div class="d-flex flex-column">
     <div class="border-bottom mb-4">
-        <div class="d-flex align-items-center gap-4">
+        @if (string.IsNullOrEmpty(Title))
+        {
+            @TitleContent
+        }
+        else
+        {
             <h2>@Title</h2>
-            @AdditionalRightContent
-        </div>
+        }
 
         @if (!string.IsNullOrWhiteSpace(Overview))
         {
@@ -18,15 +22,15 @@
 
 @code 
 {
-    [Parameter, EditorRequired]
-    public required string Title { get; set; }
+    [Parameter]
+    public string? Title { get; set; }
 
     [Parameter]
     public string? Overview { get; set; }
 
     [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    public RenderFragment? TitleContent { get; set; }
 
     [Parameter]
-    public RenderFragment? AdditionalRightContent { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 }

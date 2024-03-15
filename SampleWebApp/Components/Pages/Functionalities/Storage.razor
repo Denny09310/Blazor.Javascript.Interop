@@ -1,21 +1,16 @@
 ﻿@page "/functionalities/storage"
 
-<Container Title="Local Storage / Session Storage">
-    <AdditionalRightContent>
-        <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="storage-type-toggle" @onchange="(e) => type= (bool)e.Value! ? StorageType.SessionStorage : StorageType.LocalStorage">
-            <label class="form-check-label" for="flexSwitchCheckDefault">
-                @if (type is StorageType.LocalStorage)
-                {
-                    <span>Use Session Storage</span>
-                }
-                else
-                {
-                    <span>Use Local Storage</span>
-                }
-            </label>
-        </div>
-    </AdditionalRightContent>
+<PageTitle>Storage</PageTitle>
+
+<Container Overview="The Storage interface of the Web Storage API provides access to a particular domain's session or local storage. It allows, for example, the addition, modification, or deletion of stored data items.">
+    <TitleContent>
+       <div class="d-flex align-items-center gap-2">
+            <h2 style="width: 250px;">@(type is StorageType.LocalStorage ? "Local Storage" : "Session Storage")</h2>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="storage-type-toggle" @onchange="(e) => type= (bool)e.Value! ? StorageType.SessionStorage : StorageType.LocalStorage">
+            </div>
+       </div>
+    </TitleContent>
 
     <ChildContent>
         <h4>Clear</h4>

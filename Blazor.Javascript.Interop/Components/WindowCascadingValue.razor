@@ -16,6 +16,8 @@
         if (firstRender)
         {
             window = await JSRuntime.GetWindowAsync();
+            await window.Navigator.InitializeAsync();
+
             await InvokeAsync(StateHasChanged);
         }
     }

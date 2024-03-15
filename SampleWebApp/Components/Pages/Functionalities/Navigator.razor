@@ -1,0 +1,20 @@
+﻿@page "/functionalities/navigator"
+
+<PageTitle>Navigator</PageTitle>
+
+<Container Title="Navigator" Overview="The Navigator interface represents the state and the identity of the user agent. It allows scripts to query it and to register themselves to carry on some activities.">
+
+    <h4 class="mt-4"> <NavLink href="functionalities/bluetooth">Bluetooth</NavLink>  <Experimental /> <SecureContext /></h4>
+    <p>The bluetooth read-only property of the Navigator interface returns a Bluetooth object for the current document, providing access to Web Bluetooth API functionality.</p>
+
+    <div class="d-flex gap-2">
+    </div>
+</Container>
+
+@code
+{
+    [CascadingParameter]
+    public required JSWindow Window { get; set; }
+
+
+}

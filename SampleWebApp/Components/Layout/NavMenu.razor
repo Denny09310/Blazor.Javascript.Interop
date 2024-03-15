@@ -1,4 +1,8 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using System.Text.Json
+
+@inject IWebHostEnvironment Environment
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">SampleWebApp</a>
     </div>
@@ -8,23 +12,33 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+        
+        @foreach (var route in routes ?? [])
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="@route.Href" Match="@(string.IsNullOrEmpty(route.Href) ? NavLinkMatch.All : NavLinkMatch.Prefix)">
+                    <i class="@route.Icon me-3" aria-hidden="true"></i> @route.Label
+                </NavLink>
+            </div>
+        }
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="functionalities/console">
-                <i class="bi bi-terminal" aria-hidden="true"></i> Console
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="functionalities/storage">
-                <i class="bi bi-terminal" aria-hidden="true"></i> Local / Session Storage
-            </NavLink>
-        </div>
     </nav>
 </div>
 
+@code
+{
+    private NavRoute[]? routes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var json = await File.ReadAllTextAsync(Path.Combine(Environment.WebRootPath, "routes.json"));
+        routes = JsonSerializer.Deserialize<NavRoute[]>(json, new JsonSerializerOptions(JsonSerializerDefaults.Web));
+    }
+
+    private record NavRoute
+    {
+        public required string Label { get; init; }
+        public required string Icon { get; init; }
+        public required string Href { get; init; }
+    }
+}
