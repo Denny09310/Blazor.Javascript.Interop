@@ -5,11 +5,11 @@
 
 <Container Overview="The Bluetooth interface of the Web Bluetooth API provides methods to query Bluetooth availability and request access to devices.">
     <TitleContent>
-        <h2>Bluetooth <Experimental /> <SecureContext /></h2>
+        <h2>Bluetooth <ExperimentalIcon /> <SecureContextIcon /></h2>
     </TitleContent>
 
     <ChildContent>
-        <h4>Get Availability <Experimental /></h4>
+        <h4>Get Availability <ExperimentalIcon /></h4>
         <p>The <b>GetAvailability()</b> method of the Bluetooth interface nominally returns <b>true</b> if the user agent can support Bluetooth (because the device has a Bluetooth adapter), and <b>false</b> otherwise.</p>
     
         <div class="d-flex align-items-center gap-2">
@@ -23,25 +23,10 @@
             </div>
         }
 
-        <h4 class="mt-4">Get Devices <Experimental /></h4>
+        <h4 class="mt-4">Get Devices <ExperimentalIcon /></h4>
         <p>The <b>GetDevices()</b> method of the Bluetooth interface returns an array containing the Bluetooth devices that this origin is allowed to access — including those that are out of range and powered off.</p>
 
-        <div class="d-flex align-items-center gap-2">
-            <button class="btn btn-outline-dark" id="window-navigator-bluetooth-get-availability-button" @onclick="GetDevicesAsync">Get Devices</button>
-        </div>
-
-        @if (devices is not null)
-        {
-            <select class="form-select" aria-label="Available Bluetooth Devices">
-                <option selected>See available devices</option>
-                
-                @foreach (var device in devices)
-                {
-                    <option @key="device.Id" value="@device.Id">@device.Name</option>
-                }
-
-            </select>
-        }
+        <WorkInProgressAlert />
 
     </ChildContent>
 </Container>
@@ -49,12 +34,9 @@
 @code
 {
     private bool? available;
-    private IEnumerable<BluetoothDevice>? devices;
 
     [CascadingParameter]
     public required JSWindow Window { get; set; }
 
     private async Task GetAvailablityAsync() => available = await Window.Navigator.Bluetooth.GetAvailabiltyAsync();
-
-    private async Task GetDevicesAsync() => devices = await Window.Navigator.Bluetooth.GetDevicesAsync();
 }

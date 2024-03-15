@@ -23,5 +23,10 @@
     "label": "Bluetooth",
     "icon": "fa-brands fa-bluetooth",
     "href": "functionalities/bluetooth"
+  },
+  {
+    "label": "Clipboard",
+    "icon": "fa fa-clipboard",
+    "href": "functionalities/clipboard"
   }
 ]

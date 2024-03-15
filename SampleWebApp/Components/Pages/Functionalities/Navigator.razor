@@ -4,17 +4,10 @@
 
 <Container Title="Navigator" Overview="The Navigator interface represents the state and the identity of the user agent. It allows scripts to query it and to register themselves to carry on some activities.">
 
-    <h4 class="mt-4"> <NavLink href="functionalities/bluetooth">Bluetooth</NavLink>  <Experimental /> <SecureContext /></h4>
+    <h4 class="mt-4"> <NavLink href="functionalities/bluetooth">Bluetooth</NavLink>  <ExperimentalIcon /> <SecureContextIcon /></h4>
     <p>The bluetooth read-only property of the Navigator interface returns a Bluetooth object for the current document, providing access to Web Bluetooth API functionality.</p>
 
-    <div class="d-flex gap-2">
-    </div>
+    <h4 class="mt-4"> <NavLink href="functionalities/clipboard">Clipboard</NavLink>  <SecureContextIcon /></h4>
+    <p>The clipboard read-only property of the Navigator interface returns a Clipboard object used to read and write the clipboard's contents.</p>
+
 </Container>
-
-@code
-{
-    [CascadingParameter]
-    public required JSWindow Window { get; set; }
-
-
-}
