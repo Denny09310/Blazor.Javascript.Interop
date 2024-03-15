@@ -6,7 +6,7 @@ public class JSGeolocation(IJSObjectReference navigator) : JSInteropBase(navigat
 {
     public ValueTask ClearWatchAsync(int watchId) => InvokeVoidAsync("clearWatch", watchId);
 
-    public ValueTask GetCurrentPositionAsync() => InvokeVoidAsync("getCurrentPosition");
+    public ValueTask GetCurrentPositionAsync(Action<GeolocationPosition> success) => InvokeVoidAsync("getCurrentPosition", DotNetCallbackReference.Create(success));
 
     public ValueTask<int> WatchPosition() => InvokeAsync<int>("watchPosition");
 }

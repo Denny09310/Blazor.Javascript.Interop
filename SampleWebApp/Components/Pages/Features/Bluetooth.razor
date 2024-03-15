@@ -5,12 +5,7 @@
 
 <Container Title="Bluetooth" Overview="The Bluetooth interface of the Web Bluetooth API provides methods to query Bluetooth availability and request access to devices." RequireSecureContext ExperimentalFeature>
     <Section Title="Get Availability" Overview="The <b>GetAvailabilityAsync()</b> method of the Bluetooth interface nominally returns <b>true</b> if the user agent can support Bluetooth (because the device has a Bluetooth adapter), and <b>false</b> otherwise.">
-        <Icons>
-            <ExperimentalIcon />
-        </Icons>
-        <Content>
-            <button class="btn btn-outline-dark" id="window-navigator-bluetooth-get-availability-button" @onclick="GetAvailablityAsync">Check Availabilty</button>
-        </Content>
+        <button class="btn btn-outline-dark" id="window-navigator-bluetooth-get-availability-button" @onclick="GetAvailablityAsync">Check Availabilty</button>
     </Section>
 
     @if (available.HasValue)

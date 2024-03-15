@@ -1,0 +1,17 @@
+﻿@page "/features/geolocation"
+
+<PageTitle>Geolocation</PageTitle>
+
+<Container Title="Geolocation" Overview="The Geolocation interface represents an object able to obtain the position of the device programmatically. It gives Web content access to the location of the device. This allows a website or app to offer customized results based on the user's location." RequireSecureContext>
+    <Section Title="Get Current Position" Overview="The <b>GetCurrentPositionAsync()</b> method of the Geolocation interface is used to get the current position of the device.">
+        <button class="btn btn-outline-dark" id="window-navigator-geolocation-get-current-position-button" @onclick="GetCurrentPositionAsync">Get current position</button>
+    </Section>
+</Container>
+
+@code
+{
+    [CascadingParameter]
+    public required JSWindow Window { get; set; }
+
+    private async Task GetCurrentPositionAsync() => await Window.Navigator.Geolocation.GetCurrentPositionAsync((position) => System.Console.WriteLine(position.Timestamp));
+}

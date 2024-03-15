@@ -13,3 +13,10 @@ Object.defineProperty(Object.prototype, "setProperty", {
     writable: true,
     configurable: true
 });
+
+DotNet.attachReviver((_, value) => {
+    if (value && typeof value === 'object' && value.hasOwnProperty("__isCallBackReference")) {
+        return (...args) => value.callback.invokeMethodAsync('Invoke', ...args);
+    }
+    return value;
+});
