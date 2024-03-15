@@ -6,12 +6,28 @@
     <Section Title="Get Current Position" Overview="The <b>GetCurrentPositionAsync()</b> method of the Geolocation interface is used to get the current position of the device.">
         <button class="btn btn-outline-dark" id="window-navigator-geolocation-get-current-position-button" @onclick="GetCurrentPositionAsync">Get current position</button>
     </Section>
+
+    @if (position is not null)
+    {
+        <div class="alert alert-info mt-2" role="alert">
+            Your position is N° @position.Coords.Latitude E° @position.Coords.Longitude
+        </div>
+    }
+
 </Container>
 
 @code
 {
+    private GeolocationPosition? position;
+
     [CascadingParameter]
     public required JSWindow Window { get; set; }
 
-    private async Task GetCurrentPositionAsync() => await Window.Navigator.Geolocation.GetCurrentPositionAsync((position) => System.Console.WriteLine(position.Timestamp));
+    private async Task GetCurrentPositionAsync() => await Window.Navigator.Geolocation.GetCurrentPositionAsync(OnSuccessCallback);
+
+    private void OnSuccessCallback(GeolocationPosition position)
+    {
+        this.position = position;
+        StateHasChanged();
+    }
 }

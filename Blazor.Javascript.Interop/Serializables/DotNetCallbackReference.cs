@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 
 namespace Microsoft.JSInterop;
 
@@ -12,47 +14,46 @@ public class DotNetCallbackReference
     [JsonPropertyName("__isCallBackReference")]
     public string IsCallBackReference { get; set; } = "";
 
-    public static DotNetCallbackReference Create<T>(Func<T, ValueTask> callback) => new()
-    {
-        Callback = DotNetObjectReference.Create(new JSInteropAsyncCallbackWrapper<T>(callback))
-    };
-
-    public static DotNetCallbackReference Create(Func<ValueTask> callback) => new()
-    {
-        Callback = DotNetObjectReference.Create(new JSInteropAsyncCallbackWrapper(callback))
-    };
-    
-    public static DotNetCallbackReference Create<T>(Action<T> callback) => new()
-    {
-        Callback = DotNetObjectReference.Create(new JSInteropCallbackWrapper<T>(callback))
-    };
-    
-    public static DotNetCallbackReference Create(Action callback) => new()
+    public static DotNetCallbackReference Create(Delegate callback) => new()
     {
         Callback = DotNetObjectReference.Create(new JSInteropCallbackWrapper(callback))
     };
 
-    private class JSInteropAsyncCallbackWrapper(Func<ValueTask> func)
+    private class JSInteropCallbackWrapper(Delegate func)
     {
-        [JSInvokable]
-        public ValueTask Invoke() => func.Invoke();
-    }
+        private static readonly JsonSerializerOptions _options = new(JsonSerializerDefaults.Web);
 
-    private class JSInteropAsyncCallbackWrapper<T>(Func<T, ValueTask> func)
-    {
         [JSInvokable]
-        public ValueTask Invoke(T args) => func.Invoke(args);
-    }
+        public void Invoke(params JsonNode[] nodes)
+        {
+            var parameters = func.Method.GetParameters();
 
-    private class JSInteropCallbackWrapper(Action func)
-    {
-        [JSInvokable]
-        public void Invoke() => func.Invoke();
-    }
+            if (parameters.Length == 0)
+            {
+                func.DynamicInvoke();
+                return;
+            }
 
-    private class JSInteropCallbackWrapper<T>(Action<T> func)
-    {
-        [JSInvokable]
-        public void Invoke(T args) => func.Invoke(args);
+            var arguments = new object?[parameters.Length];
+
+            for (int i = 0; i < arguments.Length; i++)
+            {
+                var (parameter, node) = (parameters[i], nodes[i]);
+
+                if (parameter.ParameterType.IsPrimitive)
+                {
+                    var method = typeof(JsonValue).GetMethod(nameof(JsonValue.GetValue));
+                    var generic = method?.MakeGenericMethod(parameter.ParameterType);
+                    arguments[i] = generic?.Invoke(node, null);
+                }
+
+                var obj = Activator.CreateInstance(parameter.ParameterType);
+
+                var json = JsonSerializer.Serialize(node, _options);
+                arguments[i] = JsonSerializer.Deserialize(json, parameter.ParameterType, _options);
+            }
+
+            func.DynamicInvoke(arguments);
+        }
     }
 }
