@@ -59,3 +59,37 @@ function serializeObject(data, alreadySerialized = [], serializationSpec = "*") 
 
     return res;
 }
+
+function deserializeObject(data, serializationSpec = "*") {
+    if (serializationSpec === false || typeof data === "undefined" || data === null || typeof data === "number" || typeof data === "string" || typeof data === "boolean") {
+        return data;
+    }
+
+    const res = Array.isArray(data) ? [] : {};
+
+    for (const key in data) {
+        if (typeof data[key] === 'function' || data[key] === null) {
+            continue;
+        }
+
+        const currentMemberSpec = serializationSpec !== "*" ? (Array.isArray(data) ? serializationSpec : serializationSpec[key]) : "*";
+
+        if (!currentMemberSpec) {
+            continue;
+        }
+
+        const currentMember = data[key];
+
+        if (typeof currentMember === 'object') {
+            if (Array.isArray(currentMember) || currentMember.length) {
+                res[key] = currentMember.map(arrayItem => typeof arrayItem === 'object' ? deserializeObject(arrayItem, currentMemberSpec) : arrayItem);
+            } else {
+                res[key] = currentMember.length === 0 ? [] : deserializeObject(currentMember, currentMemberSpec);
+            }
+        } else {
+            res[key] = currentMember === "Infinity" ? Infinity : currentMember;
+        }
+    }
+
+    return res;
+}

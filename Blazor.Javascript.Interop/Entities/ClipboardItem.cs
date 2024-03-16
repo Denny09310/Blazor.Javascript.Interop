@@ -1,4 +1,6 @@
-﻿namespace Blazor.Javascript.Interop.Entities;
+﻿using Microsoft.JSInterop;
+
+namespace Blazor.Javascript.Interop.Entities;
 
 public class ClipboardItem
 {

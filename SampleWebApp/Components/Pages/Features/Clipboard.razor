@@ -8,9 +8,10 @@
     <Section Title="Read" Overview="The <b>ReadAsync()</b> method of the Clipboard interface requests a copy of the clipboard's contents, fulfilling the returned Promise with the data.">
         <WorkInProgressAlert />
     </Section>
-    
+
+
     <Section Title="Read Text" Overview="The <b>ReadTextAsync()</b> method of the Clipboard interface returns a Promise which fulfils with a copy of the textual contents of the system clipboard.">
-        <button class="btn btn-outline-dark" id="window-navigator-bluetooth-get-availability-button" @onclick="ReadTextAsync">Try out</button>
+        <button class="btn btn-outline-dark" id="window-navigator-clipboard-read-text-button" @onclick="ReadTextAsync">Try out</button>
     </Section>
 
     @if (!string.IsNullOrWhiteSpace(clipboard))
@@ -25,11 +26,11 @@
     </Section>
 
     <Section Title="Write Text" Overview="The <b>WriteTextAsync()</b>  method of the Clipboard interface writes the specified text to the system clipboard, returning a Promise that is resolved once the system clipboard has been updated.">
-        <button class="btn btn-outline-dark" id="window-navigator-bluetooth-get-availability-button" @onclick="WriteTextAsync">Try out</button>
+        <button class="btn btn-outline-dark" id="window-navigator-clipboard-write-text-button" @onclick="WriteTextAsync">Try out</button>
     </Section>
 </Container>
 
-@code 
+@code
 {
     private string? clipboard;
 

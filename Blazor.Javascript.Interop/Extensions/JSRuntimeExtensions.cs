@@ -1,7 +1,4 @@
 ﻿using Microsoft.JSInterop;
-using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Blazor.Javascript.Interop;
 

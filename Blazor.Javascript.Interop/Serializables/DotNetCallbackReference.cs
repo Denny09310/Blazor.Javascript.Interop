@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
@@ -40,17 +41,25 @@ public class DotNetCallbackReference
             {
                 var (parameter, node) = (parameters[i], nodes[i]);
 
-                if (parameter.ParameterType.IsPrimitive)
+                MethodInfo? method, generic;
+                var parameterType = parameter.ParameterType;
+
+                if (parameterType.IsPrimitive)
                 {
-                    var method = typeof(JsonValue).GetMethod(nameof(JsonValue.GetValue));
-                    var generic = method?.MakeGenericMethod(parameter.ParameterType);
+                    method = typeof(JsonValue).GetMethod(nameof(JsonValue.GetValue));
+                    generic = method?.MakeGenericMethod(parameterType);
                     arguments[i] = generic?.Invoke(node, null);
                 }
 
-                var obj = Activator.CreateInstance(parameter.ParameterType);
+                if (parameterType.IsArray)
+                {
+                    method = typeof(JsonArray).GetMethod(nameof(JsonArray.GetValues));
+                    generic = method?.MakeGenericMethod(parameterType);
+                    arguments[i] = generic?.Invoke(node, null);
+                }
 
-                var json = JsonSerializer.Serialize(node, _options);
-                arguments[i] = JsonSerializer.Deserialize(json, parameter.ParameterType, _options);
+                var obj = Activator.CreateInstance(parameterType);
+                arguments[i] = node.Deserialize(parameterType, _options);
             }
 
             func.DynamicInvoke(arguments);
