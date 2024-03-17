@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Blazor.Javascript.Interop.Bundle\Blazor.Javascript.Interop.Bundle.esproj" />
+  </ItemGroup>
+
 </Project>
