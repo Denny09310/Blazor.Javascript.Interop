@@ -11,6 +11,15 @@
       {
         "label": "Console",
         "href": "features/js-console"
+      },
+      {
+        "label": "Navigator",
+        "routes": [
+          {
+            "label": "Clipboard",
+            "href": "features/js-clipboard"
+          }
+        ]
       }
     ]
   }

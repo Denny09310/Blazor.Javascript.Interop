@@ -1,7 +1,7 @@
 ﻿@using System.Text.Json
 @inject IWebHostEnvironment Environment
 
-@if (Routes is null)
+@if (Routes is null || Routes.Length == 0)
 {
 
 }
@@ -21,8 +21,13 @@ else
                 {
                     <details open>
                         <summary class="space-x-2">
-                            <i class="@route.Icon" />
-                            <span>@route.Label</span>
+                            @if (!string.IsNullOrEmpty(route.Icon))
+                            {
+                                <span>
+                                    <i class="@route.Icon" />
+                                </span>
+                            }
+                            @route.Label
                         </summary>
                         <NavMenuTree Routes="@route.Routes" />
                     </details>
@@ -42,9 +47,9 @@ else
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object> AdditionalAttributes { get; set; } = null!;
 
-    protected string Class => new CssBuilder("menu menu-vertical")
+    protected string Class => new CssBuilder()
         .AddClassFromAttributes(AdditionalAttributes)
-        .Build();
+        .NullIfEmpty();
 
     protected override async Task OnInitializedAsync()
     {

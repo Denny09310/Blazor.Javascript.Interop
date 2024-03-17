@@ -1,6 +1,19 @@
 ﻿@namespace Blazor.Javascript.Interop.Documentation.Components
 
-<h2> @TitleContent </h2>
+<div class="flex items-baseline gap-4">
+    <h2> @TitleContent </h2>
+
+    @if (Experimental)
+    {
+        <i class="fa-solid fa-flask fa-lg text-primary" />
+    }
+
+    @if (SecureContext)
+    {
+        <i class="fa-solid fa-shield fa-lg text-primary" />
+    }
+</div>
+
 <p> @DescriptionContent </p>
 
 <div class="flex flex-wrap items-center gap-2">
@@ -17,4 +30,10 @@
 
     [Parameter]
     public RenderFragment? ActionsContent { get; set; }
+
+    [Parameter]
+    public bool Experimental { get; set; }
+
+    [Parameter]
+    public bool SecureContext { get; set; }
 }
