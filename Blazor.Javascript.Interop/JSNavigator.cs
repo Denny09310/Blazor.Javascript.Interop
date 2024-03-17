@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using Blazor.Javascript.Interop.Extensions;
+using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop;
 

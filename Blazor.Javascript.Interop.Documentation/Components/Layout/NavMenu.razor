@@ -1,0 +1,63 @@
+﻿@using System.Text.Json
+@inject IWebHostEnvironment Environment
+
+@if (Routes is null)
+{
+    
+}
+else
+{
+    <ul class="@Class">
+        @foreach (var route in Routes)
+        {
+            <li>
+                @if (route.Routes is null)
+                {
+                    <NavLink href="@route.Href" Match="route.Match">
+                        @route.Label
+                    </NavLink>
+                }
+                else
+                {
+                    <details>
+                        <summary>@route.Label</summary>
+                        <NavMenu Routes="@route.Routes" />
+                    </details>
+                }
+            </li>
+        }
+    </ul>
+}
+
+@code
+{
+    private static readonly JsonSerializerOptions _options = new(JsonSerializerDefaults.Web);
+
+    [Parameter]
+    public Route[]? Routes { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> AdditionalAttributes { get; set; } = null!;
+
+    protected string Class => new CssBuilder("menu menu-vertical")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Routes is not null) return;
+
+        var filepath = Path.Combine(Environment.WebRootPath, "data", "sidebar-routes.json");
+        var json = await File.ReadAllTextAsync(filepath);
+        Routes = JsonSerializer.Deserialize<Route[]>(json, _options);
+    }
+
+    public record Route
+    {
+        public string Label { get; init; } = null!;
+        public string? Href { get; init; }
+        public Route[]? Routes { get; set; }
+
+        public NavLinkMatch Match => !string.IsNullOrEmpty(Href) ? NavLinkMatch.Prefix : NavLinkMatch.All;
+    }
+}
