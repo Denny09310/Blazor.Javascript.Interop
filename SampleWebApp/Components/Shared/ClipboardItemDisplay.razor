@@ -1,0 +1,35 @@
+﻿@namespace SampleWebApp.Components
+@using Blazor.Javascript.Interop.Entities
+
+@if (!hidden)
+{
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        @content
+
+        <button class="btn btn-primary btn-sm" @onclick="() => hidden = true">Hide</button>
+    </li>
+}
+
+@code
+{
+    private string? content;
+    private bool hidden;
+
+    [Parameter, EditorRequired]
+    public required ClipboardItem Item { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var type = Item.Types.First();
+            var data = await Item.GetTypeAsync(type);
+
+            using var ms = new MemoryStream(data);
+            using var reader = new StreamReader(ms);
+
+            content = await reader.ReadToEndAsync();
+            StateHasChanged();
+        }
+    }
+}

@@ -52,31 +52,36 @@ function serializeObject(data, alreadySerialized = [], serializationSpec = "*") 
 Object.defineProperty(Object.prototype, "getProperty", {
   value: function getProperty(key) {
     return this[key];
-  },
-  writable: false,
-  configurable: true
+  }
 });
 Object.defineProperty(Object.prototype, "setProperty", {
   value: function setProperty(key, value) {
     this[key] = value;
-  },
-  writable: false,
-  configurable: true
+  }
 });
 Object.defineProperty(ClipboardItem.prototype, "toJSON", {
   value: function toJSON() {
     const serialized = serializeObject(this);
     return __spreadValues({ reference: DotNet.createJSObjectReference(this) }, serialized);
-  },
-  writable: false,
-  configurable: true
+  }
 });
 Object.defineProperty(GeolocationPosition.prototype, "toJSON", {
   value: function toJSON2() {
     return serializeObject(this);
-  },
-  writable: false,
-  configurable: true
+  }
+});
+Object.defineProperty(Blob.prototype, "toBase64", {
+  value: function() {
+    return new Promise((resolve, _) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          resolve(reader.result.replace("data:text/plain;base64,", ""));
+        }
+      };
+      reader.readAsDataURL(this);
+    });
+  }
 });
 
 // lib/index.ts

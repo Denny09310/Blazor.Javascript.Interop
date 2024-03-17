@@ -12,7 +12,11 @@ public class ClipboardItem
 
     public IReadOnlyCollection<string> Types { get; set; } = [];
 
-    public ValueTask<IEnumerable<byte>> GetTypeAsync(string type) => Reference.InvokeAsync<IEnumerable<byte>>("getType", type);
+    public async ValueTask<byte[]> GetTypeAsync(string type)
+    {
+        var blob = await Reference.InvokeAsync<IJSObjectReference>("getType", type);
+        return await blob.InvokeAsync<byte[]>("toBase64");
+    }
 }
 
 [JsonConverter(typeof(JsonStringEnumConverter<PresentationStyle>))]

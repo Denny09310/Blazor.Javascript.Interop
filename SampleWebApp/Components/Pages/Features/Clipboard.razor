@@ -6,9 +6,23 @@
 
 <Container Title="Clipboard" Overview="The Clipboard interface of the Clipboard API provides read and write access to the contents of the system clipboard. This allows a web application to implement cut, copy, and paste features." RequireSecureContext>
     <Section Title="Read" Overview="The <b>ReadAsync()</b> method of the Clipboard interface requests a copy of the clipboard's contents, fulfilling the returned Promise with the data.">
-        <button class="btn btn-outline-dark" id="window-navigator-clipboard-read-text-button" @onclick="ReadAsync">Try out</button>
+        <Icons>
+            <ExperimentalIcon />
+        </Icons>
+        <Content>
+            <button class="btn btn-outline-dark" id="window-navigator-clipboard-read-text-button" @onclick="ReadAsync">Try out</button>
+        </Content>
     </Section>
 
+    @if (items is not null)
+    {
+        <ul class="list-group mt-2">
+            @foreach (var item in items)
+            {
+                <ClipboardItemDisplay Item="item" />
+            }
+        </ul>
+    }
 
     <Section Title="Read Text" Overview="The <b>ReadTextAsync()</b> method of the Clipboard interface returns a Promise which fulfils with a copy of the textual contents of the system clipboard.">
         <button class="btn btn-outline-dark" id="window-navigator-clipboard-read-text-button" @onclick="ReadTextAsync">Try out</button>
@@ -33,11 +47,12 @@
 @code
 {
     private string? clipboard;
+    private IEnumerable<ClipboardItem>? items;
 
     [CascadingParameter]
     public required JSWindow Window { get; set; }
 
-    private async Task ReadAsync() => await Window.Navigator.Clipboard.ReadAsync();
+    private async Task ReadAsync() => items = await Window.Navigator.Clipboard.ReadAsync();
 
     private async Task ReadTextAsync() => clipboard = await Window.Navigator.Clipboard.ReadTextAsync();
 
