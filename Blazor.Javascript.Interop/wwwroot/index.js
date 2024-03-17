@@ -1,1 +1,89 @@
-"use strict";function c(e,n=[],t="*"){if(t===!1||typeof e=="undefined"||e===null||typeof e=="number"||typeof e=="string"||typeof e=="boolean")return e;let f=Array.isArray(e)?[]:{};for(let o in e){if(typeof e[o]=="function"||e[o]===null)continue;let y=t!=="*"?Array.isArray(e)?t:t[o]:"*";if(!y)continue;let r=e[o];if(typeof r=="object"){if(n.includes(r))continue;n.push(r),Array.isArray(r)||r.length?f[o]=r.map(i=>typeof i=="object"?c(i,n,y):i):f[o]=r.length===0?[]:c(r,n,y)}else f[o]=r===1/0?"Infinity":r}return f}Object.defineProperty(Object.prototype,"getProperty",{value:function(n){return this[n]},writable:!0,configurable:!0});Object.defineProperty(Object.prototype,"setProperty",{value:function(n,t){this[n]=t},writable:!0,configurable:!0});DotNet.attachReviver((e,n)=>{if(n&&typeof n=="object"&&n.hasOwnProperty("__isCallBackReference")){let{callback:t}=n;return(...f)=>t.invokeMethodAsync("Invoke",[...c(f)])}return n});
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+
+// lib/utils.ts
+function serializeObject(data, alreadySerialized = [], serializationSpec = "*") {
+  if (serializationSpec === false || typeof data === "undefined" || data === null || typeof data === "number" || typeof data === "string" || typeof data === "boolean") {
+    return data;
+  }
+  const res = Array.isArray(data) ? [] : {};
+  for (const key in data) {
+    if (typeof data[key] === "function" || data[key] === null) {
+      continue;
+    }
+    const currentMemberSpec = serializationSpec !== "*" ? Array.isArray(data) ? serializationSpec : serializationSpec[key] : "*";
+    if (!currentMemberSpec) {
+      continue;
+    }
+    const currentMember = data[key];
+    if (typeof currentMember === "object") {
+      if (alreadySerialized.includes(currentMember)) {
+        continue;
+      }
+      alreadySerialized.push(currentMember);
+      if (Array.isArray(currentMember) || typeof currentMember === "string" || typeof currentMember === "boolean" || typeof currentMember === "number" || typeof currentMember === "function") {
+        res[key] = currentMember;
+      } else {
+        res[key] = serializeObject(currentMember, alreadySerialized, currentMemberSpec);
+      }
+    } else {
+      res[key] = currentMember === Infinity ? "Infinity" : currentMember;
+    }
+  }
+  return res;
+}
+
+// lib/configuration.ts
+Object.defineProperty(Object.prototype, "getProperty", {
+  value: function getProperty(key) {
+    return this[key];
+  },
+  writable: false,
+  configurable: true
+});
+Object.defineProperty(Object.prototype, "setProperty", {
+  value: function setProperty(key, value) {
+    this[key] = value;
+  },
+  writable: false,
+  configurable: true
+});
+Object.defineProperty(ClipboardItem.prototype, "toJSON", {
+  value: function toJSON() {
+    const serialized = serializeObject(this);
+    return __spreadValues({ reference: DotNet.createJSObjectReference(this) }, serialized);
+  },
+  writable: false,
+  configurable: true
+});
+Object.defineProperty(GeolocationPosition.prototype, "toJSON", {
+  value: function toJSON2() {
+    return serializeObject(this);
+  },
+  writable: false,
+  configurable: true
+});
+
+// lib/index.ts
+DotNet.attachReviver((_, value) => {
+  if (value && typeof value === "object" && value.hasOwnProperty("__isCallBackReference")) {
+    const { callback } = value;
+    return (...args) => callback.invokeMethodAsync("Invoke", ...[args]);
+  }
+  return value;
+});

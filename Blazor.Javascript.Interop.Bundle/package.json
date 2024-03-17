@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsup lib/index.ts --out-dir ../Blazor.Javascript.Interop/wwwroot --format cjs --minify",
+    "build": "tsup lib/index.ts --out-dir ../Blazor.Javascript.Interop/wwwroot --format cjs",
     "clean": "tsc --build --clean"
   },
   "keywords": [],
