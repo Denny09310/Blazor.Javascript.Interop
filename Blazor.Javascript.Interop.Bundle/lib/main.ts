@@ -1,6 +1,8 @@
-import { DotNetObjectReference } from "./types";
+import "./init";
 
-import "./configuration";
+interface DotNetObjectReference {
+    invokeMethodAsync(identifier: string, ...args: any[]): Promise<any>
+}
 
 /**
  * Attaches a reviver function to the DotNet object.

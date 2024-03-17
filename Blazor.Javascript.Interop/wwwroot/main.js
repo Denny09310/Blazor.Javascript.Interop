@@ -48,28 +48,7 @@ function serializeObject(data, alreadySerialized = [], serializationSpec = "*") 
   return res;
 }
 
-// lib/configuration.ts
-Object.defineProperty(Object.prototype, "getProperty", {
-  value: function getProperty(key) {
-    return this[key];
-  }
-});
-Object.defineProperty(Object.prototype, "setProperty", {
-  value: function setProperty(key, value) {
-    this[key] = value;
-  }
-});
-Object.defineProperty(ClipboardItem.prototype, "toJSON", {
-  value: function toJSON() {
-    const serialized = serializeObject(this);
-    return __spreadValues({ reference: DotNet.createJSObjectReference(this) }, serialized);
-  }
-});
-Object.defineProperty(GeolocationPosition.prototype, "toJSON", {
-  value: function toJSON2() {
-    return serializeObject(this);
-  }
-});
+// lib/init.ts
 Object.defineProperty(Blob.prototype, "toBase64", {
   value: function() {
     return new Promise((resolve, _) => {
@@ -83,8 +62,29 @@ Object.defineProperty(Blob.prototype, "toBase64", {
     });
   }
 });
+Object.defineProperty(ClipboardItem.prototype, "toJSON", {
+  value: function() {
+    const serialized = serializeObject(this);
+    return __spreadValues({ reference: DotNet.createJSObjectReference(this) }, serialized);
+  }
+});
+Object.defineProperty(GeolocationPosition.prototype, "toJSON", {
+  value: function() {
+    return serializeObject(this);
+  }
+});
+Object.defineProperty(Object.prototype, "getProperty", {
+  value: function(key) {
+    return this[key];
+  }
+});
+Object.defineProperty(Object.prototype, "setProperty", {
+  value: function(key, value) {
+    this[key] = value;
+  }
+});
 
-// lib/index.ts
+// lib/main.ts
 DotNet.attachReviver((_, value) => {
   if (value && typeof value === "object" && value.hasOwnProperty("__isCallBackReference")) {
     const { callback } = value;
