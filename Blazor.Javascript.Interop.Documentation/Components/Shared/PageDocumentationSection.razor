@@ -1,0 +1,20 @@
+﻿@namespace Blazor.Javascript.Interop.Documentation.Components
+
+<h2> @TitleContent </h2>
+<p> @DescriptionContent </p>
+
+<div class="flex flex-wrap items-center gap-2">
+    @ActionsContent
+</div>
+
+@code 
+{
+    [Parameter]
+    public RenderFragment? TitleContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? DescriptionContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? ActionsContent { get; set; }
+}

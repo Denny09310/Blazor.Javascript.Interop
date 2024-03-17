@@ -1,14 +1,14 @@
-﻿using Microsoft.JSInterop;
+﻿using Blazor.Javascript.Interop.Contracts;
+using Microsoft.JSInterop;
 using System.Text.Json.Serialization;
 
 namespace Blazor.Javascript.Interop.Models;
 
-public class ClipboardItem
+public class ClipboardItem : IReferenceable
 {
-    [JsonInclude]
-    protected IJSObjectReference Reference { get; set; } = null!;
-
     public PresentationStyle PresentationStyle { get; set; }
+
+    public IJSObjectReference Reference { get; init; } = null!;
 
     public IReadOnlyCollection<string> Types { get; set; } = [];
 

@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Javascript.Interop.T
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Blazor.Javascript.Interop.Bundle", "Blazor.Javascript.Interop.Bundle\Blazor.Javascript.Interop.Bundle.esproj", "{AFC1D39C-2487-4409-AA3E-E0CBF5A794FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Javascript.Interop.Documentation", "Blazor.Javascript.Interop.Documentation\Blazor.Javascript.Interop.Documentation.csproj", "{231645CE-DA20-42AB-8B0C-A397EF899B03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Javascript.Interop.Documentation", "Blazor.Javascript.Interop.Documentation\Blazor.Javascript.Interop.Documentation.csproj", "{231645CE-DA20-42AB-8B0C-A397EF899B03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
