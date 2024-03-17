@@ -18,6 +18,10 @@
           {
             "label": "Clipboard",
             "href": "features/js-clipboard"
+          },
+          {
+            "label": "Geolocation",
+            "href": "features/js-geolocation"
           }
         ]
       }
