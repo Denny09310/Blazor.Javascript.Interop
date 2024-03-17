@@ -1,0 +1,11 @@
+﻿@namespace Blazor.Javascript.Interop.Documentation.Components
+
+<div class="prose prose-sm md:prose-base w-full max-w-4xl flex-grow p-4">
+    @ChildContent
+</div>
+
+@code
+{
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

@@ -3,7 +3,7 @@
 
 @if (Routes is null)
 {
-    
+
 }
 else
 {
@@ -20,8 +20,11 @@ else
                 else
                 {
                     <details>
-                        <summary>@route.Label</summary>
-                        <NavMenu Routes="@route.Routes" />
+                        <summary class="space-x-2">
+                            <i class="@route.Icon" />
+                            <span>@route.Label</span>
+                        </summary>
+                        <NavMenuTree Routes="@route.Routes" />
                     </details>
                 }
             </li>
@@ -47,7 +50,7 @@ else
     {
         if (Routes is not null) return;
 
-        var filepath = Path.Combine(Environment.WebRootPath, "data", "sidebar-routes.json");
+        var filepath = Path.Combine(Environment.WebRootPath, "data", "nav-menu-routes.json");
         var json = await File.ReadAllTextAsync(filepath);
         Routes = JsonSerializer.Deserialize<Route[]>(json, _options);
     }
@@ -55,7 +58,10 @@ else
     public record Route
     {
         public string Label { get; init; } = null!;
+
         public string? Href { get; init; }
+        public string? Icon { get; set; }
+
         public Route[]? Routes { get; set; }
 
         public NavLinkMatch Match => !string.IsNullOrEmpty(Href) ? NavLinkMatch.Prefix : NavLinkMatch.All;

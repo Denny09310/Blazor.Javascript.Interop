@@ -1,0 +1,17 @@
+[
+  {
+    "icon": "fa-solid fa-book",
+    "label": "Docs",
+    "routes": []
+  },
+  {
+    "icon": "fa-solid fa-shapes",
+    "label": "Feaures",
+    "routes": [
+      {
+        "label": "Console",
+        "href": "features/js-console"
+      }
+    ]
+  }
+]
