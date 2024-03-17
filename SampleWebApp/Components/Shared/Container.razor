@@ -8,7 +8,20 @@
         }
         else
         {
-            <h2>@Title</h2>
+            <div class="d-flex align-items-baseline gap-2">
+                <h2> @Title </h2>
+
+                @if (RequireSecureContext)
+                {
+                    <SecureContextIcon Size="xl" />
+                }
+
+                @if (ExperimentalFeature)
+                {
+                    <ExperimentalIcon Size="xl"  />
+                }
+
+            </div>
         }
 
         @if (!string.IsNullOrWhiteSpace(Overview))
@@ -20,13 +33,19 @@
     @ChildContent
 </div>
 
-@code 
+@code
 {
     [Parameter]
     public string? Title { get; set; }
 
     [Parameter]
     public string? Overview { get; set; }
+
+    [Parameter]
+    public bool RequireSecureContext { get; set; }
+
+    [Parameter]
+    public bool ExperimentalFeature { get; set; }
 
     [Parameter]
     public RenderFragment? TitleContent { get; set; }

@@ -13,6 +13,7 @@ internal class StorageHelper(IJavaScriptExecutor javascript, StorageType type)
     public string GetItem(string keyName) => (string)javascript.ExecuteScript($"return {storage}.getItem('{keyName}');");
 
     public string GetKey(int keyName) => (string)javascript.ExecuteScript($"return {storage}.key('{keyName}')");
+
     public long Length() => (long)javascript.ExecuteScript($"return {storage}.length");
 
     public void SetItem(string keyName, object keyValue) => javascript.ExecuteScript($"{storage}.setItem('{keyName}', {keyValue})");
@@ -25,7 +26,6 @@ internal class StorageHelper(IJavaScriptExecutor javascript, StorageType type)
         return char.ToLower(storageName[0]) + storageName[1..];
     }
 }
-
 
 public enum StorageType
 {

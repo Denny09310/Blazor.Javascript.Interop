@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop;
 
-public class JSStorage(StorageType type, IJSObjectReference window) : JSInteropBase(window, FormatCamelCase(type.ToString())), IStorage
+public class JSStorage(StorageType type, IJSObjectReference window) : JSInteropBase(window, FormatCamelCase(type.ToString() + "Storage")), IStorage
 {
     public ValueTask ClearAsync() => InvokeVoidAsync("clear");
 
@@ -16,4 +16,10 @@ public class JSStorage(StorageType type, IJSObjectReference window) : JSInteropB
     public ValueTask RemoveItemAsync(string keyName) => InvokeVoidAsync("removeItem", keyName);
 
     public ValueTask SetItemAsync<T>(string keyName, T keyValue) => InvokeVoidAsync("setItem", keyName, keyValue);
+}
+
+public enum StorageType
+{
+    Local,
+    Session
 }

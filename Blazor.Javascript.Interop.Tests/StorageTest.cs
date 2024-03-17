@@ -14,7 +14,7 @@ public class StorageTest : IClassFixture<WebDriverFixture>
     public StorageTest(WebDriverFixture webDriverFixture)
     {
         _driver = webDriverFixture.Driver;
-        _driver.Navigate().GoToUrl("http://localhost:5292/functionalities/storage");
+        _driver.Navigate().GoToUrl("http://localhost:5292/features/storage");
 
         _localStorage = new(_driver, StorageType.LocalStorage);
         _sessionStorage = new(_driver, StorageType.SessionStorage);

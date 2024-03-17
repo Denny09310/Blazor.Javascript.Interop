@@ -1,8 +1,18 @@
-﻿namespace Blazor.Javascript.Interop.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Blazor.Javascript.Interop.Entities;
 
 public class ClipboardItem
 {
     public PresentationStyle PresentationStyle { get; set; }
 
     public IReadOnlyCollection<string> Types { get; set; } = [];
+}
+
+[JsonConverter(typeof(JsonStringEnumConverter<PresentationStyle>))]
+public enum PresentationStyle
+{
+    Unspecified,
+    Inline,
+    Attachment
 }

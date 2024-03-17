@@ -1,15 +1,1 @@
-﻿Object.defineProperty(Object.prototype, "getProperty", {
-    value: function getProperty(key) {
-        return this[key];
-    },
-    writable: true,
-    configurable: true
-});
-
-Object.defineProperty(Object.prototype, "setProperty", {
-    value: function setProperty(key, value) {
-        this[key] = value;
-    },
-    writable: true,
-    configurable: true
-});
+"use strict";function c(e,n=[],t="*"){if(t===!1||typeof e=="undefined"||e===null||typeof e=="number"||typeof e=="string"||typeof e=="boolean")return e;let f=Array.isArray(e)?[]:{};for(let o in e){if(typeof e[o]=="function"||e[o]===null)continue;let y=t!=="*"?Array.isArray(e)?t:t[o]:"*";if(!y)continue;let r=e[o];if(typeof r=="object"){if(n.includes(r))continue;n.push(r),Array.isArray(r)||r.length?f[o]=r.map(i=>typeof i=="object"?c(i,n,y):i):f[o]=r.length===0?[]:c(r,n,y)}else f[o]=r===1/0?"Infinity":r}return f}Object.defineProperty(Object.prototype,"getProperty",{value:function(n){return this[n]},writable:!0,configurable:!0});Object.defineProperty(Object.prototype,"setProperty",{value:function(n,t){this[n]=t},writable:!0,configurable:!0});DotNet.attachReviver((e,n)=>{if(n&&typeof n=="object"&&n.hasOwnProperty("__isCallBackReference")){let{callback:t}=n;return(...f)=>t.invokeMethodAsync("Invoke",[...c(f)])}return n});

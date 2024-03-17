@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Javascript.Interop",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Javascript.Interop.Tests", "Blazor.Javascript.Interop.Tests\Blazor.Javascript.Interop.Tests.csproj", "{5A9B5DD4-5BFB-4E75-A701-9D3B453441A8}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Blazor.Javascript.Interop.Bundle", "Blazor.Javascript.Interop.Bundle\Blazor.Javascript.Interop.Bundle.esproj", "{AFC1D39C-2487-4409-AA3E-E0CBF5A794FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,12 @@ Global
 		{5A9B5DD4-5BFB-4E75-A701-9D3B453441A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A9B5DD4-5BFB-4E75-A701-9D3B453441A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A9B5DD4-5BFB-4E75-A701-9D3B453441A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFC1D39C-2487-4409-AA3E-E0CBF5A794FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFC1D39C-2487-4409-AA3E-E0CBF5A794FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFC1D39C-2487-4409-AA3E-E0CBF5A794FF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AFC1D39C-2487-4409-AA3E-E0CBF5A794FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFC1D39C-2487-4409-AA3E-E0CBF5A794FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFC1D39C-2487-4409-AA3E-E0CBF5A794FF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +49,7 @@ Global
 		{59616D25-4CD1-41D5-8007-879A820E3E90} = {4F0A2F8A-90B0-4973-AF4E-0E0CAC93FFD3}
 		{685D75F7-0669-4C5A-8B87-D34EBCEEB805} = {89BB5949-031B-40AB-BAB2-BD6F24485223}
 		{5A9B5DD4-5BFB-4E75-A701-9D3B453441A8} = {E1B855B4-507B-4C6B-85AF-0FF585A7A181}
+		{AFC1D39C-2487-4409-AA3E-E0CBF5A794FF} = {89BB5949-031B-40AB-BAB2-BD6F24485223}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3C818EDB-0038-41C0-B95E-18847E120C67}

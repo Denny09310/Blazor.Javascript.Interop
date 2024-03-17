@@ -4,10 +4,9 @@ namespace Blazor.Javascript.Interop;
 
 public static class JSRuntimeExtensions
 {
-    public static async ValueTask<JSWindow> GetWindowAsync(this IJSRuntime jsRuntime)
+    public static ValueTask<T> GetPropertyAsync<T>(this IJSObjectReference reference, string identifier)
     {
-        var window = await jsRuntime.GetReferenceAsync("self");
-        return new JSWindow(jsRuntime, window);
+        return reference.InvokeAsync<T>("getProperty", identifier);
     }
 
     public static ValueTask<IJSObjectReference> GetReferenceAsync(this IJSRuntime jsRuntime, string identifier)
@@ -15,8 +14,9 @@ public static class JSRuntimeExtensions
         return jsRuntime.InvokeAsync<IJSObjectReference>("eval", $"window['{identifier}']");
     }
 
-    public static ValueTask<T> GetPropertyAsync<T>(this IJSObjectReference reference, string identifier)
+    public static async ValueTask<JSWindow> GetWindowAsync(this IJSRuntime jsRuntime)
     {
-        return reference.InvokeAsync<T>("getProperty", identifier);
+        var window = await jsRuntime.GetReferenceAsync("self");
+        return new JSWindow(window);
     }
 }

@@ -7,26 +7,31 @@
   {
     "label": "Console",
     "icon": "fa fa-terminal",
-    "href": "functionalities/console"
+    "href": "features/console"
   },
   {
     "label": "Storages",
     "icon": "fa fa-hard-drive",
-    "href": "functionalities/storage"
+    "href": "features/storage"
   },
   {
     "label": "Navigator",
     "icon": "fa fa-map",
-    "href": "functionalities/navigator"
+    "href": "features/navigator"
   },
   {
     "label": "Bluetooth",
     "icon": "fa-brands fa-bluetooth",
-    "href": "functionalities/bluetooth"
+    "href": "features/bluetooth"
   },
   {
     "label": "Clipboard",
     "icon": "fa fa-clipboard",
-    "href": "functionalities/clipboard"
+    "href": "features/clipboard"
+  },
+  {
+    "label": "Geolocation",
+    "icon": "fa-solid fa-location-dot",
+    "href": "features/geolocation"
   }
 ]
