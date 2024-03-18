@@ -52,7 +52,7 @@
     {
         if (permission is not null)
         {
-            await permission.OnChangeAsync((e) => Window.Console.LogAsync("Changes for permission \"{0}\", status {1}", e.Target.Name, e.Target.State));
+            await permission.OnChangeAsync(e => Window.Console.LogAsync("Changes for permission \"{0}\", status {1}, sender: {2}", e.Target.Name, e.Target.State, e.Target.Reference));
         }
     }
 }
