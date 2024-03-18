@@ -1,0 +1,63 @@
+﻿@page "/features/js-navigator"
+
+<PageTitle>Navigator</PageTitle>
+
+<PageDocumentation Title="Navigator" Href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator">
+    <p>The Navigator interface represents the state and the identity of the user agent. It allows scripts to query it and to register themselves to carry on some activities.</p>
+
+    <PageDocumentationSection>
+        <TitleContent>Cookie Enabled</TitleContent>
+        <DescriptionContent>The <code>cookieEnabled</code> returns a Boolean value that indicates whether cookies are enabled or not.</DescriptionContent>
+        <ActionsContent>
+            <button id="navigator-cookie-enabled-button" class="btn btn-primary btn-wide">Get Value</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Language</TitleContent>
+        <DescriptionContent>The <code>language</code> static method writes an error message to the navigator if the assertion is false. If the assertion is true, nothing happens.</DescriptionContent>
+        <ActionsContent>
+            <button id="navigator-language-button" class="btn btn-primary btn-wide">Get Value</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Online</TitleContent>
+        <DescriptionContent>The <code>onLine</code> static method writes an error message to the navigator if the assertion is false. If the assertion is true, nothing happens.</DescriptionContent>
+        <ActionsContent>
+            <button id="navigator-on-line-button" class="btn btn-primary btn-wide">Get Value</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Platform</TitleContent>
+        <DescriptionContent>The <code>platform</code> static method writes an error message to the navigator if the assertion is false. If the assertion is true, nothing happens.</DescriptionContent>
+        <ActionsContent>
+            <button id="navigator-platform-button" class="btn btn-primary btn-wide">Get Value</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>User Agent</TitleContent>
+        <DescriptionContent>The <code>userAgent</code> static method writes an error message to the navigator if the assertion is false. If the assertion is true, nothing happens.</DescriptionContent>
+        <ActionsContent>
+            <button id="navigator-user-agent-button" class="btn btn-primary btn-wide">Get Value</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Web Driver</TitleContent>
+        <DescriptionContent>The <code>webDriver</code> static method writes an error message to the navigator if the assertion is false. If the assertion is true, nothing happens.</DescriptionContent>
+        <ActionsContent>
+            <button id="navigator-web-driver-button" class="btn btn-primary btn-wide">Get Value</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+</PageDocumentation>
+
+@code 
+{
+    private bool? cookieEnabled, online, webDriver;
+
+    [CascadingParameter]
+    public required JSWindow Window { get; set; }
+}

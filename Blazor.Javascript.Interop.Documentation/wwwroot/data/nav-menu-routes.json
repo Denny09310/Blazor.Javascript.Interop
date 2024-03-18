@@ -20,6 +20,10 @@
         "label": "Navigator",
         "routes": [
           {
+            "label": "Overview",
+            "href": "features/js-navigator"
+          },
+          {
             "label": "Clipboard",
             "href": "features/js-clipboard"
           },
