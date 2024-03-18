@@ -1,0 +1,43 @@
+﻿@namespace Blazor.Javascript.Interop.Documentation.Components
+@typeparam T
+
+@if (Value is not null)
+{
+    <div role="alert" class="not-prose alert shadow-lg">
+        <i class="fa fa-info-circle fa-xl" />
+        
+        @if (Title is not null)
+        {
+            <div>
+                <h3 class="font-bold">@Title(Value)</h3>
+                <div class="text-sm">@Message(Value)</div>
+            </div>
+        }
+        else
+        {
+            <div class="text-sm">@Message(Value)</div>
+        }
+
+        @if (typeof(T) == typeof(string) || Nullable.GetUnderlyingType(typeof(T)) != null)
+        {
+            <button class="btn btn-circle btn-sm" @onclick="() => ValueChanged.InvokeAsync(default)">
+                <i class="fa fa-times" />
+            </button>
+        }
+    </div>
+}
+
+@code 
+{
+    [Parameter]
+    public Func<T, string>? Title { get; set; }
+
+    [Parameter, EditorRequired]
+    public required Func<T, string> Message { get; set; }
+
+    [Parameter]
+    public T? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<T?> ValueChanged { get; set; }
+}
