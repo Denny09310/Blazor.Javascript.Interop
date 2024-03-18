@@ -1,0 +1,65 @@
+﻿@page "/features/js-clipboard"
+
+<PageTitle>Clipboard</PageTitle>
+
+<PageDocumentation Title="Clipboard" SecureContext>
+    <p>The Clipboard interface of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API" target="_blank">Clipboard API</a> provides read and write access to the contents of the system clipboard. This allows a web application to implement cut, copy, and paste features.</p>
+
+    @if (!string.IsNullOrEmpty(clipboardContent))
+    {
+        <div role="alert" class="not-prose alert shadow-lg">
+            <i class="fa fa-info-circle fa-xl" />
+            <div>
+                <h3 class="font-bold">This is the content of your clipboard</h3>
+                <div class="text-xs">@clipboardContent</div>
+            </div>
+            <button class="btn btn-circle btn-sm" @onclick="() => clipboardContent = string.Empty">
+                <i class="fa fa-times" />
+            </button>
+        </div>
+    }
+
+    <PageDocumentationSection Experimental>
+        <TitleContent>Read</TitleContent>
+        <DescriptionContent>The read() method of the Clipboard interface requests a copy of the clipboard's contents, fulfilling the returned Promise with the data.</DescriptionContent>
+        <ActionsContent>
+            <button id="clipboard-read-button" class="btn btn-primary btn-wide" disabled>Read</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Read Text</TitleContent>
+        <DescriptionContent>The readText() method of the Clipboard interface returns a Promise which fulfils with a copy of the textual contents of the system clipboard.</DescriptionContent>
+        <ActionsContent>
+            <button id="clipboard-read-text-button" class="btn btn-primary btn-wide" @onclick="ReadTextAsync">Read Text</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection Experimental>
+        <TitleContent>Write</TitleContent>
+        <DescriptionContent>The write() method of the Clipboard interface writes arbitrary data to the clipboard, such as images, fulfilling the returned Promise on completion. This can be used to implement cut and copy functionality.</DescriptionContent>
+        <ActionsContent>
+            <button id="clipboard-write-button" class="btn btn-primary btn-wide" disabled>Write</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Write Text</TitleContent>
+        <DescriptionContent>The writeText() method of the Clipboard interface writes the specified text to the system clipboard, returning a Promise that is resolved once the system clipboard has been updated.</DescriptionContent>
+        <ActionsContent>
+            <button id="clipboard-write-text-button" class="btn btn-primary btn-wide" @onclick="WriteTextAsync">Write Text</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+</PageDocumentation>
+
+@code
+{
+    private string? clipboardContent;
+
+    [CascadingParameter]
+    public required JSWindow Window { get; set; }
+
+    private async Task ReadTextAsync() => clipboardContent = await Window.Navigator.Clipboard.ReadTextAsync();
+
+    private async Task WriteTextAsync() => await Window.Navigator.Clipboard.WriteTextAsync("This is a sample content");
+}

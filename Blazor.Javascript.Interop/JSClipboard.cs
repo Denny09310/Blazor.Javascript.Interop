@@ -1,4 +1,4 @@
-﻿using Blazor.Javascript.Interop.Entities;
+﻿using Blazor.Javascript.Interop.Models;
 using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop;

@@ -1,9 +1,10 @@
-﻿using System.Reflection;
+﻿using Microsoft.JSInterop;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.JSInterop;
+namespace Blazor.Javascript.Interop.Serializables;
 
 public class DotNetCallbackReference
 {

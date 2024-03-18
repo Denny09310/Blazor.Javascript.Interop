@@ -6,7 +6,7 @@ public interface IStorage
 
     ValueTask<T> GetItemAsync<T>(string keyName);
 
-    ValueTask<string> KeyAsync(int index);
+    ValueTask<T> KeyAsync<T>(int index);
 
     ValueTask<int> LengthAsync();
 

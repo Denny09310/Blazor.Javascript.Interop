@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace Blazor.Javascript.Interop;
+namespace Blazor.Javascript.Interop.Extensions;
 
 public static class JSRuntimeExtensions
 {

@@ -1,0 +1,34 @@
+[
+  {
+    "icon": "fa-solid fa-book",
+    "label": "Docs",
+    "routes": []
+  },
+  {
+    "icon": "fa-solid fa-shapes",
+    "label": "Feaures",
+    "routes": [
+      {
+        "label": "Console",
+        "href": "features/js-console"
+      },
+      {
+        "label": "Storage",
+        "href": "features/js-storage"
+      },
+      {
+        "label": "Navigator",
+        "routes": [
+          {
+            "label": "Clipboard",
+            "href": "features/js-clipboard"
+          },
+          {
+            "label": "Geolocation",
+            "href": "features/js-geolocation"
+          }
+        ]
+      }
+    ]
+  }
+]
