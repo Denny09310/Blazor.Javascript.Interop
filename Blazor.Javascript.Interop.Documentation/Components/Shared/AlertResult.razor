@@ -18,6 +18,8 @@
             <div class="text-sm">@((MarkupString)Message(Value))</div>
         }
 
+        @AdditionalContent
+
         @if (typeof(T) == typeof(string) || Nullable.GetUnderlyingType(typeof(T)) != null)
         {
             <button class="btn btn-circle btn-sm" @onclick="() => ValueChanged.InvokeAsync(default)">
@@ -40,4 +42,7 @@
 
     [Parameter]
     public EventCallback<T?> ValueChanged { get; set; }
+
+    [Parameter]
+    public RenderFragment? AdditionalContent { get; set; }
 }

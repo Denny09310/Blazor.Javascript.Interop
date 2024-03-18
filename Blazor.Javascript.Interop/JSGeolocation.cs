@@ -1,5 +1,4 @@
 ﻿using Blazor.Javascript.Interop.Models;
-using Blazor.Javascript.Interop.Serializables;
 using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop;
