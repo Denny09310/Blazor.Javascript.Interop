@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using Blazor.Javascript.Interop.Extensions;
+using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop;
 
@@ -17,4 +18,8 @@ public class JSWindow(IJSObjectReference self)
     public JSStorage SessionStorage => sessionStorage.Value;
 
     public JSNavigator Navigator => navigator.Value;
+
+    public ValueTask<bool> ClosedAsync() => self.GetPropertyAsync<bool>("closed");
+    public ValueTask<bool> CredentialLessAsync() => self.GetPropertyAsync<bool>("credentialless");
+    public ValueTask<bool> CrossOriginIsolatedAsync() => self.GetPropertyAsync<bool>("crossOriginIsolated");
 }

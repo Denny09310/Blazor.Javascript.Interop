@@ -5,20 +5,6 @@
 <PageDocumentation Title="Clipboard" SecureContext>
     <p>The Clipboard interface of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API" target="_blank">Clipboard API</a> provides read and write access to the contents of the system clipboard. This allows a web application to implement cut, copy, and paste features.</p>
 
-    @if (!string.IsNullOrEmpty(clipboardContent))
-    {
-        <div role="alert" class="not-prose alert shadow-lg">
-            <i class="fa fa-info-circle fa-xl" />
-            <div>
-                <h3 class="font-bold">This is the content of your clipboard</h3>
-                <div class="text-xs">@clipboardContent</div>
-            </div>
-            <button class="btn btn-circle btn-sm" @onclick="() => clipboardContent = string.Empty">
-                <i class="fa fa-times" />
-            </button>
-        </div>
-    }
-
     <PageDocumentationSection Experimental>
         <TitleContent>Read</TitleContent>
         <DescriptionContent>The read() method of the Clipboard interface requests a copy of the clipboard's contents, fulfilling the returned Promise with the data.</DescriptionContent>
@@ -34,6 +20,8 @@
             <button id="clipboard-read-text-button" class="btn btn-primary btn-wide" @onclick="ReadTextAsync">Read Text</button>
         </ActionsContent>
     </PageDocumentationSection>
+
+    <AlertResult @bind-Value="content" Message="@((content) => $"The content of the clipboard is \"{content}\"")" />
 
     <PageDocumentationSection Experimental>
         <TitleContent>Write</TitleContent>
@@ -54,12 +42,12 @@
 
 @code
 {
-    private string? clipboardContent;
+    private string? content;
 
     [CascadingParameter]
     public required JSWindow Window { get; set; }
 
-    private async Task ReadTextAsync() => clipboardContent = await Window.Navigator.Clipboard.ReadTextAsync();
+    private async Task ReadTextAsync() => content = await Window.Navigator.Clipboard.ReadTextAsync();
 
     private async Task WriteTextAsync() => await Window.Navigator.Clipboard.WriteTextAsync("This is a sample content");
 }

@@ -1,10 +1,17 @@
 ﻿@namespace Blazor.Javascript.Interop.Documentation.Components
 
-<div class="prose prose-sm !max-w-full px-4 md:prose-base">
+<div class="prose prose-sm !max-w-full px-4 pb-4 md:prose-base">
     <div class="flex items-baseline gap-4">
         @AdditionalLeftContent
         
         <h2> @Title </h2>
+
+        @if (!string.IsNullOrWhiteSpace(Href))
+        {
+            <a href="@Href" target="_blank">
+                <i class="fa fa-external-link" />
+            </a>
+        }
 
         @AdditionalRightContent
 
@@ -35,6 +42,9 @@
 
     [Parameter]
     public string? Title { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
 
     [Parameter]
     public bool Experimental { get; set; }
