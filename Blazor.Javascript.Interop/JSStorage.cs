@@ -9,7 +9,7 @@ public class JSStorage(StorageType type, IJSObjectReference window) : JSInteropB
 
     public ValueTask<T> GetItemAsync<T>(string keyName) => InvokeAsync<T>("getItem", keyName);
 
-    public ValueTask<string> KeyAsync(int index) => InvokeAsync<string>("key", index);
+    public ValueTask<T> KeyAsync<T>(int index) => InvokeAsync<T>("key", index);
 
     public ValueTask<int> LengthAsync() => GetPropertyAsync<int>("length");
 

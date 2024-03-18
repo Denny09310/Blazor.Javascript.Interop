@@ -13,6 +13,10 @@
         "href": "features/js-console"
       },
       {
+        "label": "Storage",
+        "href": "features/js-storage"
+      },
+      {
         "label": "Navigator",
         "routes": [
           {
