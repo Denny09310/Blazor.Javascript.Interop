@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using Blazor.Javascript.Interop.Models;
+using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop.Extensions;
 
@@ -18,5 +19,20 @@ public static class JSRuntimeExtensions
     {
         var window = await jsRuntime.GetReferenceAsync("self");
         return new JSWindow(window);
+    }
+
+    public static ValueTask SetPropertyAsync<T>(this IJSObjectReference reference, string identifier, T value)
+    {
+        return reference.InvokeVoidAsync("setProperty", identifier, value);
+    }
+
+    public static ValueTask AddEventListenerAsync<T>(this IJSObjectReference reference, string type, Action<EventListenerCallback<T>> callback)
+    {
+        return reference.InvokeVoidAsync("addEventListener", type, DotNetCallbackReference.Create(callback));
+    }
+
+    public static ValueTask AddEventListenerAsync<T>(this IJSObjectReference reference, string type, Func<EventListenerCallback<T>, ValueTask> callback)
+    {
+        return reference.InvokeVoidAsync("addEventListener", type, DotNetCallbackReference.Create(callback));
     }
 }

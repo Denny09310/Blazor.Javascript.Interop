@@ -13,10 +13,12 @@ public class JSNavigator(IJSObjectReference window) : JSInteropBase(window, "nav
     private Lazy<JSBluetooth>? bluetooth;
     private Lazy<JSClipboard>? clipboard;
     private Lazy<JSGeolocation>? geolocation;
+    private Lazy<JSPermissions>? permissions;
 
     public JSBluetooth Bluetooth => bluetooth?.Value ?? throw new NotSupportedException("The navigator has not been initialized yet");
     public JSClipboard Clipboard => clipboard?.Value ?? throw new NotSupportedException("The navigator has not been initialized yet");
     public JSGeolocation Geolocation => geolocation?.Value ?? throw new NotSupportedException("The navigator has not been initialized yet");
+    public JSPermissions Permissions => permissions?.Value ?? throw new NotSupportedException("The navigator has not been initialized yet");
 
     public async ValueTask InitializeAsync()
     {
@@ -25,6 +27,7 @@ public class JSNavigator(IJSObjectReference window) : JSInteropBase(window, "nav
         bluetooth = new(() => new JSBluetooth(_navigator));
         clipboard = new(() => new JSClipboard(_navigator));
         geolocation = new(() => new JSGeolocation(_navigator));
+        permissions = new(() => new JSPermissions(_navigator));
     }
 
     #region Properties

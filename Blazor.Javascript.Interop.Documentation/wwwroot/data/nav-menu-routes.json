@@ -30,6 +30,10 @@
           {
             "label": "Geolocation",
             "href": "features/js-geolocation"
+          },
+          {
+            "label": "Permissions",
+            "href": "features/js-permissions"
           }
         ]
       },

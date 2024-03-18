@@ -73,6 +73,17 @@ Object.defineProperty(GeolocationPosition.prototype, "toJSON", {
     return serializeObject(this);
   }
 });
+Object.defineProperty(PermissionStatus.prototype, "toJSON", {
+  value: function() {
+    const serialized = serializeObject(this);
+    return __spreadValues({ reference: DotNet.createJSObjectReference(this) }, serialized);
+  }
+});
+Object.defineProperty(Event.prototype, "toJSON", {
+  value: function() {
+    return serializeObject(this);
+  }
+});
 Object.defineProperty(Object.prototype, "getProperty", {
   value: function(key) {
     return this[key];

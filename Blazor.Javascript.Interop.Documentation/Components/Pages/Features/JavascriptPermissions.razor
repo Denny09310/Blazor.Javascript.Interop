@@ -1,0 +1,58 @@
+﻿@page "/features/js-permissions"
+@using Blazor.Javascript.Interop.Models
+
+<PageTitle>Permissions</PageTitle>
+
+<PageDocumentation Title="Permissions" Href="https://developer.mozilla.org/en-US/docs/Web/API/Permissions">
+    <p>The Permissions interface of the Permissions API provides the core Permission API functionality, such as methods for querying and revoking permissions</p>
+    <select @bind="selected" class="select select-bordered">
+        <option selected>Select a permission to query</option>
+
+        @foreach (var permission in permissions)
+        {
+            <option value="@permission">@permission</option>
+        }
+    </select>
+
+    <PageDocumentationSection>
+        <TitleContent>Query</TitleContent>
+        <DescriptionContent>The <code>Permissions.query()</code> method of the Permissions interface returns the state of a user permission on the global scope.</DescriptionContent>
+        <ActionsContent>
+            <button id="permissions-query-button" class="btn btn-primary btn-wide" @onclick="QueryAsync">Get Permissions</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <AlertResult @bind-Value="permission" Message="@(permission => $"The permission state for \"{permission!.Name}\" is {permission!.State}")">
+        <AdditionalContent>
+            <button id="permissions-query-on-change-button" class="btn btn-sm btn-primary btn-wide" @onclick="RegisterOnChange">Start Listener</button>
+        </AdditionalContent>
+    </AlertResult>
+</PageDocumentation>
+
+@code
+{
+    private static readonly string[] permissions = ["geolocation", "notifications"];
+
+    private string? selected;
+
+    private PermissionStatus? permission;
+
+    [CascadingParameter]
+    public required JSWindow Window { get; set; }
+
+    private async Task QueryAsync()
+    {
+        if (!string.IsNullOrEmpty(selected))
+        {
+            permission = await Window.Navigator.Permissions.QueryAsync(new() { Name = selected });
+        }
+    }
+
+    private async Task RegisterOnChange()
+    {
+        if (permission is not null)
+        {
+            await permission.OnChangeAsync((e) => Window.Console.LogAsync("Changes for permission \"{0}\", status {1}", e.Target.Name, e.Target.State));
+        }
+    }
+}
