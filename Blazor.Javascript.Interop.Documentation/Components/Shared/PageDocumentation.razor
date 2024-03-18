@@ -6,6 +6,13 @@
         
         <h2> @Title </h2>
 
+        @if (!string.IsNullOrWhiteSpace(Href))
+        {
+            <a href="@Href" target="_blank">
+                <i class="fa fa-external-link" />
+            </a>
+        }
+
         @AdditionalRightContent
 
         @if (Experimental)
@@ -35,6 +42,9 @@
 
     [Parameter]
     public string? Title { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
 
     [Parameter]
     public bool Experimental { get; set; }
