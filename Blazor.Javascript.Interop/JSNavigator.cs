@@ -1,4 +1,5 @@
 ﻿using Blazor.Javascript.Interop.Extensions;
+using Blazor.Javascript.Interop.Models;
 using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop;
@@ -8,7 +9,7 @@ public class JSNavigator(IJSObjectReference window) : JSInteropBase(window, "nav
     private readonly IJSObjectReference window = window;
 
     private IJSObjectReference? _navigator;
-    
+
     private Lazy<JSBluetooth>? bluetooth;
     private Lazy<JSClipboard>? clipboard;
     private Lazy<JSGeolocation>? geolocation;
@@ -26,15 +27,31 @@ public class JSNavigator(IJSObjectReference window) : JSInteropBase(window, "nav
         geolocation = new(() => new JSGeolocation(_navigator));
     }
 
-    public ValueTask<bool> CookieEnabledAsync() => _navigator?.GetPropertyAsync<bool>("cookieEnabled") ?? throw new NotSupportedException("The navigator has not been initialized yet");
+    #region Properties
 
-    public ValueTask<string> LanguageAsync() => _navigator?.GetPropertyAsync<string>("language") ?? throw new NotSupportedException("The navigator has not been initialized yet");
+    public ValueTask<bool> CookieEnabledAsync() => GetPropertyAsync<bool>("cookieEnabled");
 
-    public ValueTask<bool> OnlineAsync() => _navigator?.GetPropertyAsync<bool>("onLine") ?? throw new NotSupportedException("The navigator has not been initialized yet");
+    public ValueTask<double> DeviceMemoryAsync() => GetPropertyAsync<double>("deviceMemory");
 
-    public ValueTask<string> PlatformAsync() => _navigator?.GetPropertyAsync<string>("appName") ?? throw new NotSupportedException("The navigator has not been initialized yet");
+    public ValueTask<int> HardwareConcurrencyAsync() => GetPropertyAsync<int>("hardwareConcurrency");
 
-    public ValueTask<string> UserAgentAsync() => _navigator?.GetPropertyAsync<string>("appName") ?? throw new NotSupportedException("The navigator has not been initialized yet");
+    public ValueTask<string> LanguageAsync() => GetPropertyAsync<string>("language");
 
-    public ValueTask<bool> WebDriverAsync() => _navigator?.GetPropertyAsync<bool>("webDriver") ?? throw new NotSupportedException("The navigator has not been initialized yet");
+    public ValueTask<IEnumerable<string>> LanguagesAsync() => GetPropertyAsync<IEnumerable<string>>("languages");
+
+    public ValueTask<int> MaxTouchPointsAsync() => GetPropertyAsync<int>("maxTouchPoints");
+
+    public ValueTask<bool> OnlineAsync() => GetPropertyAsync<bool>("onLine");
+
+    public ValueTask<bool> PdfViewerEnabledAsync() => GetPropertyAsync<bool>("pdfViewerEnabled");
+
+    public ValueTask<string> UserAgentAsync() => GetPropertyAsync<string>("userAgent");
+
+    public ValueTask<NavigatorUAData> UserAgentDataAsync() => GetPropertyAsync<NavigatorUAData>("userAgentData");
+
+    public ValueTask<bool> WebDriverAsync() => GetPropertyAsync<bool>("webdriver");
+
+    #endregion Properties
+
+    private new ValueTask<T> GetPropertyAsync<T>(string propertyName) => _navigator?.GetPropertyAsync<T>(propertyName) ?? throw new NotSupportedException("The navigator has not been initialized yet");
 }
