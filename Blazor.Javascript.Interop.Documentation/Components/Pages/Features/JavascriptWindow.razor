@@ -1,0 +1,52 @@
+﻿@page "/features/js-window"
+
+<PageTitle>Window</PageTitle>
+
+<PageDocumentation Title="Window">
+    <p>The Window interface represents a window containing a <a href="https://developer.mozilla.org/en-US/docs/Glossary/DOM" target="_blank">DOM</a> document; the document property points to the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">DOM document</a> loaded in that window.</p>
+
+    <PageDocumentationSection>
+        <TitleContent>Closed</TitleContent>
+        <DescriptionContent>The <code>closed</code> read-only property indicates whether the referenced window is closed or not.</DescriptionContent>
+        <ActionsContent>
+            <button id="window-closed-button" class="btn btn-primary btn-wide" @onclick="ClosedAsync">Get Value</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <AlertResult @bind-Value="closed" Message="@((closed) => "The window is" + (closed!.Value ? " " : " not ") + "closed")" />
+
+    <PageDocumentationSection>
+        <TitleContent>Credential Less</TitleContent>
+        <DescriptionContent>The <code>creedentialless</code> read-only property returns a boolean that indicates whether the current document was loaded inside a credentialless <code>&lt;iframe&gt;</code> meaning that it is loaded in a new, ephemeral context.</DescriptionContent>
+        <ActionsContent>
+            <button id="window-creedentialless-button" class="btn btn-primary btn-wide" @onclick="CredentialLessAsync">Get Value</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <AlertResult @bind-Value="credentialless" Message="@((credentialless) => "The window was loaded" + (credentialless!.Value ? " with " : " without ") + "credentials")" />
+
+    <PageDocumentationSection>
+        <TitleContent>Cross Origin Isolated</TitleContent>
+        <DescriptionContent>The <code>crossOriginIsolated</code> read-only property returns a boolean value that indicates whether the website is in a cross-origin isolation state</DescriptionContent>
+        <ActionsContent>
+            <button id="window-creedentialless-button" class="btn btn-primary btn-wide" @onclick="CrossOriginIsolatedAsync">Get Value</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <AlertResult @bind-Value="crossOriginIsolated" Message="@((crossOriginIsolated) => "The window is" + (crossOriginIsolated!.Value ? " " : " not ") + "isolated with CORS")" />
+
+</PageDocumentation>
+
+@code
+{
+    private bool? closed, credentialless, crossOriginIsolated;
+
+    [CascadingParameter]
+    public required JSWindow Window { get; set; }
+
+    private async Task ClosedAsync() => closed = await Window.ClosedAsync();
+
+    private async Task CredentialLessAsync() => credentialless = await Window.CredentialLessAsync();
+
+    private async Task CrossOriginIsolatedAsync() => crossOriginIsolated = await Window.CrossOriginIsolatedAsync();
+}

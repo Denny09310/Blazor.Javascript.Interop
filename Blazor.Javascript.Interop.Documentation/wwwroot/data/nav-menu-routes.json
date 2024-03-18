@@ -28,6 +28,10 @@
             "href": "features/js-geolocation"
           }
         ]
+      },
+      {
+        "label": "Window",
+        "href": "features/js-window"
       }
     ]
   }
