@@ -84,6 +84,16 @@ Object.defineProperty(Event.prototype, "toJSON", {
     return serializeObject(this);
   }
 });
+Object.defineProperty(PasswordCredential.prototype, "toJSON", {
+  value: function() {
+    return serializeObject(this);
+  }
+});
+Object.defineProperty(FederatedCredential.prototype, "toJSON", {
+  value: function() {
+    return serializeObject(this);
+  }
+});
 Object.defineProperty(Object.prototype, "getProperty", {
   value: function(key) {
     return this[key];

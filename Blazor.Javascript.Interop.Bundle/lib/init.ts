@@ -61,6 +61,26 @@ Object.defineProperty(Event.prototype, "toJSON", {
 });
 
 /**
+ * Defines a method to serialize a PasswordCredential object to JSON format.
+ * @returns {any} The JSON representation of the PermissionStatus object.
+ */
+Object.defineProperty(PasswordCredential.prototype, "toJSON", {
+    value: function (): any {
+        return serializeObject(this)
+    },
+});
+
+/**
+ * Defines a method to serialize a FederatedCredential object to JSON format.
+ * @returns {any} The JSON representation of the PermissionStatus object.
+ */
+Object.defineProperty(FederatedCredential.prototype, "toJSON", {
+    value: function (): any {
+        return serializeObject(this)
+    },
+});
+
+/**
  * Defines a method to retrieve the value of a property from an object.
  * @param {string} key - The key of the property to retrieve.
  * @returns {any} The value of the specified property.
