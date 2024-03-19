@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "tsup lib/main.ts --out-dir ../Blazor.Javascript.Interop/wwwroot --format cjs",
+    "build": "tsup --config tsup.config.ts",
     "clean": "tsc --build --clean"
   },
   "devDependencies": {

@@ -48,7 +48,7 @@ function serializeObject(data, alreadySerialized = [], serializationSpec = "*") 
   return res;
 }
 
-// lib/init.ts
+// lib/definitions.ts
 Object.defineProperty(Blob.prototype, "toBase64", {
   value: function() {
     return new Promise((resolve, _) => {
@@ -105,7 +105,7 @@ Object.defineProperty(Object.prototype, "setProperty", {
   }
 });
 
-// lib/main.ts
+// lib/index.ts
 DotNet.attachReviver((_, value) => {
   if (value && typeof value === "object" && value.hasOwnProperty("__isCallBackReference")) {
     const { callback } = value;

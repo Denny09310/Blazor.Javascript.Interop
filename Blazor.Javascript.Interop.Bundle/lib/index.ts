@@ -1,4 +1,4 @@
-import "./init";
+import "./definitions";
 
 interface DotNetObjectReference {
     invokeMethodAsync(identifier: string, ...args: any[]): Promise<any>
