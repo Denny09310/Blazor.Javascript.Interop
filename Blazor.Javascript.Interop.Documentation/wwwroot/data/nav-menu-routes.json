@@ -28,6 +28,10 @@
             "href": "features/js-clipboard"
           },
           {
+            "label": "Credentials",
+            "href": "features/js-credentials"
+          },
+          {
             "label": "Geolocation",
             "href": "features/js-geolocation"
           },
