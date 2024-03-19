@@ -9,7 +9,7 @@ public class PermissionStatus : IReferenceable
 {
     public string Name { get; set; } = null!;
     public PermissionState State { get; set; }
-    
+
     public IJSObjectReference Reference { get; init; } = null!;
 
     public ValueTask OnChangeAsync(Action<EventListenerCallback<PermissionStatus>> action) => Reference.AddEventListenerAsync("change", action);

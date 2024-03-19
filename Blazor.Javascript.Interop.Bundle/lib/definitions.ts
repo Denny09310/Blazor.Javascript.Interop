@@ -51,7 +51,7 @@ Object.defineProperty(PermissionStatus.prototype, "toJSON", {
 });
 
 /**
- * Defines a method to serialize a PermissionStatus object to JSON format.
+ * Defines a method to serialize a Event object to JSON format.
  * @returns {any} The JSON representation of the PermissionStatus object.
  */
 Object.defineProperty(Event.prototype, "toJSON", {

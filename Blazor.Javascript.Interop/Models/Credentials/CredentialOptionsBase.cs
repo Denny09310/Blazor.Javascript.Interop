@@ -15,16 +15,3 @@ public class CredentialOptionsBase(string id)
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Origin { get; set; }
 }
-
-public class FederatedCredentialOptions(string id, string provider) : CredentialOptionsBase(id)
-{
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Protocol { get; set; }
-
-    public string Provider { get; set; } = provider;
-}
-
-public class PasswordCredentialOptions(string id, string password) : CredentialOptionsBase(id)
-{
-    public string Password { get; set; } = password;
-}
