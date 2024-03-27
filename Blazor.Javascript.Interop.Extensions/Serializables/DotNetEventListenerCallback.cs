@@ -1,6 +1,6 @@
-﻿namespace Blazor.Javascript.Interop.Models;
+﻿namespace Microsoft.JSInterop;
 
-public class EventListenerCallback<T>
+public class DotNetEventListenerCallback<T>
 {
     public bool IsTrusted { get; set; }
     public T Target { get; set; } = default!;

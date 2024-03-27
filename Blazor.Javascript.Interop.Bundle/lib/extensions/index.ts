@@ -1,4 +1,15 @@
-import "./definitions";
+import { serializeObject } from "../utils";
+
+/**
+ * Defines a method to serialize a Event object to JSON format.
+ * @returns {any} The JSON representation of the PermissionStatus object.
+ */
+Object.defineProperty(Event.prototype, "toJSON", {
+    value: function (): any {
+        return serializeObject(this)
+    },
+});
+
 
 interface DotNetObjectReference {
     invokeMethodAsync(identifier: string, ...args: any[]): Promise<any>

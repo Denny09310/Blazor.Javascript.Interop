@@ -1,4 +1,4 @@
-import { serializeObject } from "./utils";
+import { serializeObject } from "../utils";
 
 /**
  * Defines a method to convert a Blob object to a Base64 string.
@@ -47,16 +47,6 @@ Object.defineProperty(PermissionStatus.prototype, "toJSON", {
     value: function (): any {
         const serialized = serializeObject(this);
         return { reference: DotNet.createJSObjectReference(this), ...serialized }
-    },
-});
-
-/**
- * Defines a method to serialize a Event object to JSON format.
- * @returns {any} The JSON representation of the PermissionStatus object.
- */
-Object.defineProperty(Event.prototype, "toJSON", {
-    value: function (): any {
-        return serializeObject(this)
     },
 });
 
