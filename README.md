@@ -20,26 +20,36 @@ After installing the package, you can start using it in your Blazor project by f
 
 1. **Import the Namespace**: Import the ```Blazor.Javascript.Interop``` namespace in your Blazor components where you intend to utilize JavaScript interop functionalities.
 
-    ```csharp
-    using Blazor.Javascript.Interop;
+    ```razor
+    @using Blazor.Javascript.Interop;
+    @using Blazor.Javascript.Interop.Extensions;
     ```
 
-2. **Invoke JavaScript Functions**: Utilize the provided methods to invoke JavaScript functions from your C# code.
+2. **Wrap your Router**: Wrap the router component with the **&lt;WindowCascadingValue&gt;** component
 
-    ```csharp
+    ```razor
     // Example of invoking a JavaScript function from C# code
-    JavascriptInterop.InvokeVoid("alert", "Hello, world!");
+    <WindowCascadingValue>
+        <Router AppAssembly="typeof(Program).Assembly">
+            <Found Context="routeData">
+                <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+                <FocusOnNavigate RouteData="routeData" Selector="h1" />
+            </Found>
+        </Router>
+    </WindowCascadingValue>
     ```
 
-3. **Receive JavaScript Callbacks**: Receive callbacks from JavaScript functions in your C# code.
+3. **Get the JSWindow object**: Utilize the provided methods to invoke JavaScript functions from your C# code.
 
     ```csharp
-    // Example of receiving a callback from a JavaScript function
-    JavascriptInterop.OnCallback += (args) =>
-    {
-        // Handle the callback data
-        Console.WriteLine($"Received callback from JavaScript: {args}");
-    };
+    [CascadingParameter]
+    public required JSWindow Window { get; set; }
+    ```
+
+4. **Use the javascript methods**: Check what are the methods ported to C# from javascript
+
+    ```csharp
+    private async Task CookieEnabledAsync() => cookieEnabled = await Window.Navigator.CookieEnabledAsync();
     ```
 
 ## Compatibility
