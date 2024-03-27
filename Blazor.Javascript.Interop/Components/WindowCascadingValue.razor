@@ -1,3 +1,4 @@
+@using Blazor.Javascript.Interop.Extensions
 @inject IJSRuntime JSRuntime
 
 <CascadingValue Value="window">
@@ -16,6 +17,8 @@
         if (firstRender)
         {
             window = await JSRuntime.GetWindowAsync();
+            await window.Navigator.InitializeAsync();
+
             await InvokeAsync(StateHasChanged);
         }
     }

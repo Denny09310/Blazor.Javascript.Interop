@@ -1,0 +1,121 @@
+﻿@page "/features/js-console"
+
+<PageTitle>Console</PageTitle>
+
+<PageDocumentation Title="Console" Href="https://developer.mozilla.org/en-US/docs/Web/API/Console">
+    <p>The console object provides access to the debugging console (e.g., the Web console in Firefox). The specifics of how it works vary from browser to browser or server runtimes (Node.js, for example), but there is a de facto set of features that are typically provided.</p>
+
+    <PageDocumentationSection>
+        <TitleContent>Assert</TitleContent>
+        <DescriptionContent>The <code>console.assert()</code> static method writes an error message to the console if the assertion is false. If the assertion is true, nothing happens.</DescriptionContent>
+        <ActionsContent>
+            <button id="console-assert-true-button" class="btn btn-primary btn-wide" @onclick="() => AssertAsync(true)">True Condition</button>
+            <button id="console-assert-false-button" class="btn btn-primary btn-wide" @onclick="() => AssertAsync(false)">False Condition</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Clear</TitleContent>
+        <DescriptionContent>The <code>console.clear()</code> static method clears the console if the console allows it. A graphical console, like those running on browsers, will allow it; a console displaying on the terminal, like the one running on Node, will not support it, and will have no effect (and no error).</DescriptionContent>
+        <ActionsContent>
+            <button id="console-clear-button" class="btn btn-primary btn-wide" @onclick="ClearAsync">Clear</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Count</TitleContent>
+        <DescriptionContent>The <code>console.count()</code> static method logs the number of times that this particular call to count() has been called.</DescriptionContent>
+        <ActionsContent>
+            <button id="console-count-button" class="btn btn-primary btn-wide" @onclick="CountAsync">Count</button>
+            <button id="console-count-reset-button" class="btn btn-primary btn-wide" @onclick="CountResetAsync">Count Reset</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Group</TitleContent>
+        <DescriptionContent>The <code>console.table()</code>  static method creates a new inline group in the Web console log, causing any subsequent console messages to be indented by an additional level, until <code>console.groupEnd()</code> is called.</DescriptionContent>
+        <ActionsContent>
+            <button id="console-group-button" class="btn btn-primary btn-wide" @onclick="GroupAsync">Group</button>
+            <button id="console-group-end-button" class="btn btn-neutral btn-wide" @onclick="GroupEndAsync">Group End</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Log</TitleContent>
+        <DescriptionContent>The <code>console.log()</code> static method outputs a message to the console. The message may be a single string (with optional substitution values), or it may be any one or more JavaScript objects.</DescriptionContent>
+        <ActionsContent>
+            <button id="console-debug-button" class="btn btn-neutral btn-wide" @onclick="() => LogAsync(LogLevel.Debug)">Debug</button>
+            <button id="console-info-button" class="btn btn-info btn-wide" @onclick="() => LogAsync(LogLevel.Info)">Info</button>
+            <button id="console-warn-button" class="btn btn-warning btn-wide" @onclick="() => LogAsync(LogLevel.Warning)">Warn</button>
+            <button id="console-error-button" class="btn btn-error btn-wide" @onclick="() => LogAsync(LogLevel.Severe)">Error</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Table</TitleContent>
+        <DescriptionContent>The <code>console.table()</code>  static method displays tabular data as a table.</DescriptionContent>
+        <ActionsContent>
+            <button id="console-table-button" class="btn btn-primary btn-wide" @onclick="TableAsync">Table</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Time</TitleContent>
+        <DescriptionContent>The <code>console.time()</code> static method starts a timer you can use to track how long an operation takes. You give each timer a unique name, and may have up to 10,000 timers running on a given page. When you call <code>console.timeEnd()</code> with the same name, the browser will output the time, in milliseconds, that elapsed since the timer was started.</DescriptionContent>
+        <ActionsContent>
+            <button id="console-time-button" class="btn btn-primary btn-wide" @onclick="TimeAsync">Time</button>
+            <button id="console-time-end-button" class="btn btn-neutral btn-wide" @onclick="TimeEndAsync">Time End</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+
+    <PageDocumentationSection>
+        <TitleContent>Trace</TitleContent>
+        <DescriptionContent>The <code>console.trace()</code> static method outputs a stack trace to the console.</DescriptionContent>
+        <ActionsContent>
+            <button id="console-trace-button" class="btn btn-primary btn-wide" @onclick="TraceAsync">Trace</button>
+        </ActionsContent>
+    </PageDocumentationSection>
+</PageDocumentation>
+
+@code
+{
+    [CascadingParameter]
+    public required JSWindow Window { get; set; }
+
+    private async Task AssertAsync(bool condition) => await Window.Console.AssertAsync(condition);
+
+    private async Task ClearAsync() => await Window.Console.ClearAsync();
+
+    private async Task CountAsync() => await Window.Console.CountAsync();
+
+    private async Task CountResetAsync() => await Window.Console.CountResetAsync();
+
+    private async Task GroupAsync() => await Window.Console.GroupAsync();
+
+    private async Task GroupEndAsync() => await Window.Console.GroupEndAsync();
+
+    private async Task LogAsync(LogLevel level) => await (level switch
+    {
+        LogLevel.Debug => Window.Console.DebugAsync("This is a debug message"),
+        LogLevel.Info => Window.Console.InfoAsync("This is a info message"),
+        LogLevel.Warning => Window.Console.WarnAsync("This is a warning message"),
+        LogLevel.Severe => Window.Console.ErrorAsync("This is a severe message"),
+        _ => throw new NotImplementedException()
+    });
+
+    private async Task TableAsync() => await Window.Console.TableAsync(new[] { "apples", "oranges", "bananas" });
+
+    private async Task TimeAsync() => await Window.Console.TimeAsync();
+
+    private async Task TimeEndAsync() => await Window.Console.TimeEndAsync();
+
+    private async Task TraceAsync() => await Window.Console.TraceAsync("This is a stack trace");
+
+    private enum LogLevel
+    {
+        Debug,
+        Info,
+        Warning,
+        Severe
+    }
+}

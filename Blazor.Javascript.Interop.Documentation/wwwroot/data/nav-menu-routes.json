@@ -1,0 +1,50 @@
+[
+  {
+    "icon": "fa-solid fa-book",
+    "label": "Docs",
+    "routes": []
+  },
+  {
+    "icon": "fa-solid fa-shapes",
+    "label": "Feaures",
+    "routes": [
+      {
+        "label": "Console",
+        "href": "features/js-console"
+      },
+      {
+        "label": "Storage",
+        "href": "features/js-storage"
+      },
+      {
+        "label": "Navigator",
+        "routes": [
+          {
+            "label": "Overview",
+            "href": "features/js-navigator"
+          },
+          {
+            "label": "Clipboard",
+            "href": "features/js-clipboard"
+          },
+          {
+            "label": "Credentials",
+            "href": "features/js-credentials"
+          },
+          {
+            "label": "Geolocation",
+            "href": "features/js-geolocation"
+          },
+          {
+            "label": "Permissions",
+            "href": "features/js-permissions"
+          }
+        ]
+      },
+      {
+        "label": "Window",
+        "href": "features/js-window"
+      }
+    ]
+  }
+]

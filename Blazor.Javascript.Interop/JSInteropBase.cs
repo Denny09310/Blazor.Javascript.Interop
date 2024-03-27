@@ -1,22 +1,16 @@
 ﻿using Microsoft.JSInterop;
-using System.Runtime.CompilerServices;
 
 namespace Blazor.Javascript.Interop;
 
-public abstract class JSInteropBase(IJSRuntime _, IJSObjectReference __)
+public abstract class JSInteropBase(IJSObjectReference parent, string propertyName)
 {
-    protected static string GetPropertyPath([CallerFilePath] string? className = default!, [CallerMemberName] string? methodName = default!)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(className);
-        ArgumentException.ThrowIfNullOrWhiteSpace(methodName);
+    public ValueTask<TValue> GetPropertyAsync<TValue>(string property) => InvokeAsync<TValue>("getProperty", property);
 
-        className = Path.GetFileNameWithoutExtension(className)
-            .Replace("JS", string.Empty);
+    public ValueTask<TValue> InvokeAsync<TValue>(string identifier, params object?[]? args) => parent.InvokeAsync<TValue>(GetPropertyPath(identifier), args);
 
-        methodName = methodName.Replace("Async", string.Empty);
+    public ValueTask InvokeVoidAsync(string identifier, params object?[]? args) => parent.InvokeVoidAsync(GetPropertyPath(identifier), args);
 
-        return string.Join('.', FormatCamelCase(className), FormatCamelCase(methodName));
-    }
+    protected static string FormatCamelCase(string source) => char.ToLower(source[0]) + source[1..];
 
-    private static string FormatCamelCase(string source) => char.ToLower(source[0]) + source[1..];
+    private string GetPropertyPath(params string[] methodPath) => $"{propertyName}." + string.Join(".", methodPath);
 }

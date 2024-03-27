@@ -1,17 +1,12 @@
 ﻿using Microsoft.JSInterop;
 
-namespace Blazor.Javascript.Interop;
+namespace Blazor.Javascript.Interop.Extensions;
 
 public static class JSRuntimeExtensions
 {
     public static async ValueTask<JSWindow> GetWindowAsync(this IJSRuntime jsRuntime)
     {
         var window = await jsRuntime.GetReferenceAsync("self");
-        return new JSWindow(jsRuntime, window);
-    }
-
-    public static ValueTask<IJSObjectReference> GetReferenceAsync(this IJSRuntime jsRuntime, string identifier)
-    {
-        return jsRuntime.InvokeAsync<IJSObjectReference>("eval", $"window['{identifier}']");
+        return new JSWindow(window);
     }
 }

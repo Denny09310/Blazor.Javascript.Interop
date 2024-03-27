@@ -1,0 +1,54 @@
+﻿@namespace Blazor.Javascript.Interop.Documentation.Components
+
+<div class="prose prose-sm !max-w-full px-4 pb-4 md:prose-base">
+    <div class="flex items-baseline gap-4">
+        @AdditionalLeftContent
+        
+        <h2> @Title </h2>
+
+        @if (!string.IsNullOrWhiteSpace(Href))
+        {
+            <a href="@Href" target="_blank">
+                <i class="fa fa-external-link" />
+            </a>
+        }
+
+        @AdditionalRightContent
+
+        @if (Experimental)
+        {
+            <i class="fa-solid fa-flask fa-xl text-primary" />
+        }
+
+        @if (SecureContext)
+        {
+            <i class="fa-solid fa-shield fa-xl text-primary" />
+        }
+    </div>
+
+    @ChildContent
+</div>
+
+@code
+{
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? AdditionalLeftContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? AdditionalRightContent{ get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
+
+    [Parameter]
+    public bool Experimental { get; set; }
+
+    [Parameter]
+    public bool SecureContext { get; set; }
+}
