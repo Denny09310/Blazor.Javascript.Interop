@@ -1,4 +1,4 @@
-import { serializeObject } from "./utils";
+import { serializeObject } from "../utils";
 
 /**
  * Defines a method to convert a Blob object to a Base64 string.
@@ -51,10 +51,20 @@ Object.defineProperty(PermissionStatus.prototype, "toJSON", {
 });
 
 /**
- * Defines a method to serialize a PermissionStatus object to JSON format.
+ * Defines a method to serialize a PasswordCredential object to JSON format.
  * @returns {any} The JSON representation of the PermissionStatus object.
  */
-Object.defineProperty(Event.prototype, "toJSON", {
+Object.defineProperty(PasswordCredential.prototype, "toJSON", {
+    value: function (): any {
+        return serializeObject(this)
+    },
+});
+
+/**
+ * Defines a method to serialize a FederatedCredential object to JSON format.
+ * @returns {any} The JSON representation of the PermissionStatus object.
+ */
+Object.defineProperty(FederatedCredential.prototype, "toJSON", {
     value: function (): any {
         return serializeObject(this)
     },

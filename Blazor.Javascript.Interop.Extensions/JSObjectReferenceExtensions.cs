@@ -1,16 +1,15 @@
-﻿using Blazor.Javascript.Interop.Models;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop.Extensions;
 
 public static class JSObjectReferenceExtensions
 {
-    public static ValueTask AddEventListenerAsync<T>(this IJSObjectReference reference, string type, Action<EventListenerCallback<T>> callback)
+    public static ValueTask AddEventListenerAsync<T>(this IJSObjectReference reference, string type, Action<DotNetEventListenerCallback<T>> callback)
     {
         return reference.InvokeVoidAsync("addEventListener", type, DotNetEventCallbackReference.Create(reference, callback));
     }
 
-    public static ValueTask AddEventListenerAsync<T>(this IJSObjectReference reference, string type, Func<EventListenerCallback<T>, ValueTask> callback)
+    public static ValueTask AddEventListenerAsync<T>(this IJSObjectReference reference, string type, Func<DotNetEventListenerCallback<T>, ValueTask> callback)
     {
         return reference.InvokeVoidAsync("addEventListener", type, DotNetEventCallbackReference.Create(reference, callback));
     }

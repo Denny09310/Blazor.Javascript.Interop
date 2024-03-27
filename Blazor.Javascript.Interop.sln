@@ -17,6 +17,8 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Blazor.Javascript.Interop.B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Javascript.Interop.Documentation", "Blazor.Javascript.Interop.Documentation\Blazor.Javascript.Interop.Documentation.csproj", "{231645CE-DA20-42AB-8B0C-A397EF899B03}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Javascript.Interop.Extensions", "Blazor.Javascript.Interop.Extensions\Blazor.Javascript.Interop.Extensions.csproj", "{D4122AE4-4B2D-44A1-8013-CBCC73F473B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{231645CE-DA20-42AB-8B0C-A397EF899B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{231645CE-DA20-42AB-8B0C-A397EF899B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{231645CE-DA20-42AB-8B0C-A397EF899B03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4122AE4-4B2D-44A1-8013-CBCC73F473B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4122AE4-4B2D-44A1-8013-CBCC73F473B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4122AE4-4B2D-44A1-8013-CBCC73F473B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4122AE4-4B2D-44A1-8013-CBCC73F473B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{5A9B5DD4-5BFB-4E75-A701-9D3B453441A8} = {E1B855B4-507B-4C6B-85AF-0FF585A7A181}
 		{AFC1D39C-2487-4409-AA3E-E0CBF5A794FF} = {89BB5949-031B-40AB-BAB2-BD6F24485223}
 		{231645CE-DA20-42AB-8B0C-A397EF899B03} = {4F0A2F8A-90B0-4973-AF4E-0E0CAC93FFD3}
+		{D4122AE4-4B2D-44A1-8013-CBCC73F473B4} = {89BB5949-031B-40AB-BAB2-BD6F24485223}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3C818EDB-0038-41C0-B95E-18847E120C67}

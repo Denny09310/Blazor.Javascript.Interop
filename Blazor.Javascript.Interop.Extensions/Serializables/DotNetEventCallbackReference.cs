@@ -1,5 +1,4 @@
 ﻿using Blazor.Javascript.Interop.Contracts;
-using Blazor.Javascript.Interop.Models;
 using System.Reflection;
 using System.Text.Json.Nodes;
 
@@ -29,7 +28,7 @@ public class DotNetEventCallbackReference : BaseCallbackReference
             var parameterType = parameter.ParameterType;
 
             // Check if parameterType is compatible with EventListenerCallback<>
-            if (sender is not null && parameterType.IsGenericType && parameterType.GetGenericTypeDefinition() == typeof(EventListenerCallback<>))
+            if (sender is not null && parameterType.IsGenericType && parameterType.GetGenericTypeDefinition() == typeof(DotNetEventListenerCallback<>))
             {
                 // Get the Target property of EventListenerCallback<>
                 var targetProperty = parameterType.GetProperty("Target");

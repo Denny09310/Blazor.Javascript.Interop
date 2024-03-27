@@ -9,12 +9,12 @@ public class PermissionStatus : IReferenceable
 {
     public string Name { get; set; } = null!;
     public PermissionState State { get; set; }
-    
+
     public IJSObjectReference Reference { get; init; } = null!;
 
-    public ValueTask OnChangeAsync(Action<EventListenerCallback<PermissionStatus>> action) => Reference.AddEventListenerAsync("change", action);
+    public ValueTask OnChangeAsync(Action<DotNetEventListenerCallback<PermissionStatus>> action) => Reference.AddEventListenerAsync("change", action);
 
-    public ValueTask OnChangeAsync(Func<EventListenerCallback<PermissionStatus>, ValueTask> func) => Reference.AddEventListenerAsync("change", func);
+    public ValueTask OnChangeAsync(Func<DotNetEventListenerCallback<PermissionStatus>, ValueTask> func) => Reference.AddEventListenerAsync("change", func);
 }
 
 [JsonConverter(typeof(JsonStringEnumConverter<PermissionState>))]
