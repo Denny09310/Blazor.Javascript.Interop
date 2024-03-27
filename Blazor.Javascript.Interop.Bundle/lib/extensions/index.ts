@@ -10,6 +10,26 @@ Object.defineProperty(Event.prototype, "toJSON", {
     },
 });
 
+/**
+ * Defines a method to serialize a PointerEvent object to JSON format.
+ * @returns {any} The JSON representation of the PermissionStatus object.
+ */
+Object.defineProperty(PointerEvent.prototype, "toJSON", {
+    value: function (): any {
+        return serializeObject(this)
+    },
+});
+
+/**
+ * 
+ * Defines a method to add a callback to any ElementReference
+ */
+Object.defineProperty(Window.prototype, "addEventCallback", {
+    value: function (element: any, type: string, callback: any): any {
+        element.addEventListener(type, callback);
+    },
+});
+
 
 interface DotNetObjectReference {
     invokeMethodAsync(identifier: string, ...args: any[]): Promise<any>

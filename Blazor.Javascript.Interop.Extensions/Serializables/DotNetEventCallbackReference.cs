@@ -9,17 +9,17 @@ public class DotNetEventCallbackReference : BaseCallbackReference
     private DotNetEventCallbackReference()
     { }
 
-    public static DotNetEventCallbackReference Create(IJSObjectReference sender, Delegate callback) => new()
+    public static DotNetEventCallbackReference Create(IJSObjectReference? sender, Delegate callback) => new()
     {
         Callback = CreateCallback(sender, callback)
     };
 
-    protected static object? CreateCallback(IJSObjectReference sender, Delegate func)
+    protected static object? CreateCallback(IJSObjectReference? sender, Delegate func)
     {
         return DotNetObjectReference.Create(new JSInteropEventCallbackWrapper(sender, func));
     }
 
-    private class JSInteropEventCallbackWrapper(IJSObjectReference sender, Delegate func) : JSInteropCallbackWrapper(func)
+    private class JSInteropEventCallbackWrapper(IJSObjectReference? sender, Delegate func) : JSInteropCallbackWrapper(func)
     {
         protected override object? ParseArgument(JsonNode node, ParameterInfo parameter)
         {

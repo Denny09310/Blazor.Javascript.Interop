@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.271090-alpha">
   <ItemGroup>
-    <Folder Include="dist\main\" />
+    <Folder Include="dist\extensions\" />
     <Folder Include="lib\extensions\" />
   </ItemGroup>
 </Project>
