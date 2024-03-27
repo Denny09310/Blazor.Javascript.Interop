@@ -4,7 +4,7 @@ using Microsoft.JSInterop;
 
 namespace Blazor.Javascript.Interop;
 
-public class JSNavigator(IJSObjectReference window) : JSInteropBase(window, "navigator")
+public class JSNavigator(IJSObjectReference window) : JSInteropBase(window, "navigator"), IAsyncDisposable
 {
     private readonly IJSObjectReference window = window;
 
@@ -60,4 +60,14 @@ public class JSNavigator(IJSObjectReference window) : JSInteropBase(window, "nav
     #endregion Properties
 
     private new ValueTask<T> GetPropertyAsync<T>(string propertyName) => _navigator?.GetPropertyAsync<T>(propertyName) ?? throw new NotSupportedException("The navigator has not been initialized yet");
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_navigator != null)
+        {
+            await _navigator.DisposeAsync();
+        }
+
+        GC.SuppressFinalize(this);
+    }
 }
