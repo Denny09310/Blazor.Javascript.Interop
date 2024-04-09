@@ -66,5 +66,4 @@ declare global {
         protocol: string;
         provider: string;
     }
-
 }

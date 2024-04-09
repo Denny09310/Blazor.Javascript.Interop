@@ -9,7 +9,7 @@
 
 	<PropertyGroup>
 		<Title>$(AssemblyName)</Title>
-		<Version>0.0.1-beta</Version>
+		<Version>0.0.2</Version>
 		<Authors>Koja Dennis</Authors>
 		<Description>Blazor.Javascript.Interop is a NuGet package designed as an extension library specifically for Blazor projects. It facilitates seamless interoperability between C# code in Blazor and JavaScript, empowering developers to incorporate JavaScript functionalities into their Blazor applications effortlessly.</Description>
 		<PackageProjectUrl>https://github.com/Denny09310/Blazor.Javascript.Interop</PackageProjectUrl>
@@ -21,7 +21,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Remove="wwwroot\index.js" />
+	  <Content Remove="wwwroot\index.js" />
 	</ItemGroup>
 
 	<ItemGroup>
