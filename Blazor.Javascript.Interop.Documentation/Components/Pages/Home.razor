@@ -1,6 +1,5 @@
 ﻿@page "/"
 @rendermode InteractiveServer
-@inject IJSRuntime JSRuntime
 
 <PageTitle>Blazor Javascript Interop</PageTitle>
 
@@ -89,7 +88,7 @@
     </section>
 
     <!-- Acknowledgements -->
-    <section @ref="element" class="mb-8">
+    <section class="mb-8">
         <h2 class="text-2xl font-bold mb-4">Acknowledgements</h2>
         <p class="mb-4">
             This project is inspired by the growing need for seamless integration between C# and JavaScript
@@ -98,18 +97,3 @@
     </section>
 
 </div>
-
-@code 
-{
-    private ElementReference element;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JSRuntime.AddEventListener(element, "click", () => Console.WriteLine("Click"));
-        }
-
-        await base.OnAfterRenderAsync(firstRender);
-    }
-}
