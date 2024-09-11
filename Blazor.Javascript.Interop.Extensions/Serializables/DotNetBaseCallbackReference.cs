@@ -1,19 +1,43 @@
-﻿using System.Reflection;
+﻿using Blazor.Javascript.Interop.Extensions;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.JSInterop;
 
-public abstract class BaseCallbackReference
+public class DotNetCallbackReference
 {
-    protected BaseCallbackReference()
+    private DotNetCallbackReference()
     { }
 
     public object? Callback { get; set; }
 
+    [JsonPropertyName("__callbackId")]
+    public string CallbackId { get; set; } = Guid.NewGuid().ToString();
+
     [JsonPropertyName("__isCallBackReference")]
-    public string IsCallBackReference { get; set; } = "";
+    public bool IsCallBackReference { get; set; } = true;
+
+    public object? SerializationSpec { get; set; } = "*";
+
+    public static DotNetCallbackReference Create(Delegate @delegate) => Create(@delegate, "*");
+
+    public static DotNetCallbackReference Create(Delegate @delegate, object serializationSpec)
+    {
+        DotNetCallbackReference callback = new()
+        {
+            Callback = CreateCallback(@delegate),
+            SerializationSpec = serializationSpec
+        };
+
+        if (!DotNetCallbackRegistry.TryAdd(@delegate, callback.CallbackId))
+        {
+            throw new InvalidOperationException("Cannot add callback reference to the registry.");
+        }
+
+        return callback;
+    }
 
     protected static object? CreateCallback(Delegate func)
     {
