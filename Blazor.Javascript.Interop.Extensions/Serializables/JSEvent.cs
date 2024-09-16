@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.JSInterop;
 
-public class DotNetEventListener
+public class JSEvent
 {
     public bool IsTrusted { get; set; }
     public string? Type { get; set; }

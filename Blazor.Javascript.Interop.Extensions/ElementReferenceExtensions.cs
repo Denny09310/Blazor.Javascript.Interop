@@ -35,13 +35,13 @@ public static class ElementReferenceExtensions
         await jsRuntime.InvokeVoidAsync("BlazorJavascriptInterop.addEventListener", element, type, DotNetCallbackReference.Create(callback, serializationSpec));
     }
 
-    public static async ValueTask<T> InvokeAsync<T>(this ElementReference element, string identifier, params object[]? args)
+    public static async ValueTask<T> InvokeAsync<T>(this ElementReference element, string identifier, params object?[]? args)
     {
         var reference = await GetJsObjectReference(element);
         return await reference.InvokeAsync<T>(identifier, args);
     }
 
-    public static async ValueTask InvokeVoidAsync(this ElementReference element, string identifier, params object[]? args)
+    public static async ValueTask InvokeVoidAsync(this ElementReference element, string identifier, params object?[]? args)
     {
         var reference = await GetJsObjectReference(element);
         await reference.InvokeVoidAsync(identifier, args);
