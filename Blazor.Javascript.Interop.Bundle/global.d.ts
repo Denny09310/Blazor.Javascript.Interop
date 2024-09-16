@@ -29,41 +29,5 @@ declare global {
          */
         createJSObjectReference(data: Record<string, object>): Record<string, object>;
     };
-
-    /**
-     * @interface Credential
-     * @description Represents a generic credential.
-     * @property {string} id - The identifier of the credential.
-     * @property {"password" | "federated" | "public-key" | "identity" | "otp"} type - The type of the credential.
-     */
-    class Credential {
-        id: string;
-        type: "password" | "federated" | "public-key" | "identity" | "otp";
-    }
-
-    /**
-     * @interface PasswordCredential
-     * @description Represents a password-based credential.
-     * @augments Credential
-     * @property {string} iconURL - The URL to the icon associated with the credential.
-     * @property {string} name - The name associated with the credential.
-     * @property {string} password - The password value of the credential.
-     */
-    class PasswordCredential extends Credential {
-        iconURL: string;
-        name: string;
-        password: string;
-    }
-
-    /**
-     * @interface FederatedCredential
-     * @description Represents a federated credential.
-     * @augments Credential
-     * @property {string} protocol - The protocol used for federated authentication.
-     * @property {string} provider - The provider of the federated credential.
-     */
-    class FederatedCredential extends Credential {
-        protocol: string;
-        provider: string;
-    }
+    
 }

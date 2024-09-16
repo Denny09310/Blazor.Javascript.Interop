@@ -1,3 +1,5 @@
+export type SerializationSpec = Record<string, any> | string | boolean;
+
 /**
  * Serializes an object according to the given serialization specifications.
  * @param data The data to be serialized.
@@ -5,7 +7,7 @@
  * @param serializationSpec The specification for serialization.
  * @returns The serialized object.
  */
-export function serializeObject<T extends Record<string, any>>(data: T, alreadySerialized: any[] = [], serializationSpec: Record<string, any> | string | boolean = "*"): T {
+export function serialize<T extends Record<string, any>>(data: T, alreadySerialized: any[] = [], serializationSpec: SerializationSpec = "*"): T {
     if (serializationSpec === false || typeof data === "undefined" || data === null || typeof data === "number" || typeof data === "string" || typeof data === "boolean") {
         return data;
     }
@@ -34,7 +36,7 @@ export function serializeObject<T extends Record<string, any>>(data: T, alreadyS
             if (Array.isArray(currentMember) || typeof currentMember === 'string' || typeof currentMember === 'boolean' || typeof currentMember === 'number' || typeof currentMember === 'function') {
                 res[key] = currentMember;
             } else {
-                res[key] = serializeObject(currentMember, alreadySerialized, currentMemberSpec);
+                res[key] = serialize(currentMember, alreadySerialized, currentMemberSpec);
             }
         } else {
             res[key] = currentMember === Infinity ? "Infinity" : currentMember;
