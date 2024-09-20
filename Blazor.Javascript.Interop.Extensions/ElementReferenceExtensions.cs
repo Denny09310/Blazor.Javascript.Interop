@@ -1,38 +1,55 @@
 ﻿using Blazor.Javascript.Interop.Extensions;
 using Microsoft.AspNetCore.Components;
 using System.Runtime.CompilerServices;
-using System.Xml.Linq;
 
 namespace Microsoft.JSInterop;
 
 public static class ElementReferenceExtensions
 {
-    public static async ValueTask AddEventListenerAsync<T>(this ElementReference element, string type, Action<T> callback)
+    public static async ValueTask<string> AddEventListenerAsync(this ElementReference element, string type, Action callback)
     {
-        var jsRuntime = GetJSRuntime(element) ?? throw new InvalidOperationException("No JavaScript runtime found.");
+        var runtime = element.GetJSRuntime();
+        return await runtime.InvokeAsync<string>(BlazorJavascriptInteropConstants.AddEventListener, element, type, DotNetCallbackReference.Create(callback));
+    }
+
+    public static async ValueTask<string> AddEventListenerAsync<T>(this ElementReference element, string type, Action<T> callback)
+    {
         var serializationSpec = GetSerializationSpec<T>();
 
-        await jsRuntime.InvokeVoidAsync("BlazorJavascriptInterop.addEventListener", element, type, DotNetCallbackReference.Create(callback, serializationSpec));
+        var runtime = element.GetJSRuntime();
+        return await runtime.InvokeAsync<string>(BlazorJavascriptInteropConstants.AddEventListener, element, type, DotNetCallbackReference.Create(callback, serializationSpec));
     }
 
-    public static async ValueTask AddEventListenerAsync<T>(this ElementReference element, string type, Action<T> callback, object serializationSpec)
+    public static async ValueTask<string> AddEventListenerAsync<T>(this ElementReference element, string type, Action<T> callback, object serializationSpec)
     {
-        var jsRuntime = GetJSRuntime(element) ?? throw new InvalidOperationException("No JavaScript runtime found.");
-        await jsRuntime.InvokeVoidAsync("BlazorJavascriptInterop.addEventListener", element, type, DotNetCallbackReference.Create(callback, serializationSpec));
+        var runtime = element.GetJSRuntime();
+        return await runtime.InvokeAsync<string>(BlazorJavascriptInteropConstants.AddEventListener, element, type, DotNetCallbackReference.Create(callback, serializationSpec));
     }
 
-    public static async ValueTask AddEventListenerAsync<T>(this ElementReference element, string type, Func<T, ValueTask> callback)
+    public static async ValueTask<string> AddEventListenerAsync(this ElementReference element, string type, Func<ValueTask> callback)
     {
-        var jsRuntime = GetJSRuntime(element) ?? throw new InvalidOperationException("No JavaScript runtime found.");
+        var runtime = element.GetJSRuntime();
+        return await runtime.InvokeAsync<string>(BlazorJavascriptInteropConstants.AddEventListener, element, type, DotNetCallbackReference.Create(callback));
+    }
+
+    public static async ValueTask<string> AddEventListenerAsync<T>(this ElementReference element, string type, Func<T, ValueTask> callback)
+    {
         var serializationSpec = GetSerializationSpec<T>();
 
-        await jsRuntime.InvokeVoidAsync("BlazorJavascriptInterop.addEventListener", element, type, DotNetCallbackReference.Create(callback, serializationSpec));
+        var runtime = element.GetJSRuntime();
+        return await runtime.InvokeAsync<string>(BlazorJavascriptInteropConstants.AddEventListener, element, type, DotNetCallbackReference.Create(callback, serializationSpec));
     }
 
-    public static async ValueTask AddEventListenerAsync<T>(this ElementReference element, string type, Func<T, ValueTask> callback, object serializationSpec)
+    public static async ValueTask<string> AddEventListenerAsync<T>(this ElementReference element, string type, Func<T, ValueTask> callback, object serializationSpec)
     {
-        var jsRuntime = GetJSRuntime(element) ?? throw new InvalidOperationException("No JavaScript runtime found.");
-        await jsRuntime.InvokeVoidAsync("BlazorJavascriptInterop.addEventListener", element, type, DotNetCallbackReference.Create(callback, serializationSpec));
+        var runtime = element.GetJSRuntime();
+        return await runtime.InvokeAsync<string>(BlazorJavascriptInteropConstants.AddEventListener, element, type, DotNetCallbackReference.Create(callback, serializationSpec));
+    }
+
+    public static async ValueTask<T> GetPropertyAsync<T>(this ElementReference element, string name)
+    {
+        var runtime = element.GetJSRuntime();
+        return await runtime.InvokeAsync<T>(BlazorJavascriptInteropConstants.GetProperty, element, name);
     }
 
     public static async ValueTask<T> InvokeAsync<T>(this ElementReference element, string identifier, params object?[]? args)
@@ -47,42 +64,66 @@ public static class ElementReferenceExtensions
         await reference.InvokeVoidAsync(identifier, args);
     }
 
-    public static async ValueTask RemoveEventListenerAsync(this ElementReference element, string type, Delegate callback)
+    public static async ValueTask RemoveEventListenerAsync(this ElementReference element, string type, string callbackId)
     {
-        if (!DotNetCallbackRegistry.TryGetCallbackId(callback, out var callbackId))
-        {
-            throw new InvalidOperationException("Delegate has no registered callback in the registry.");
-        }
-
-        var jsRuntime = GetJSRuntime(element) ?? throw new InvalidOperationException("No JavaScript runtime found.");
-        await jsRuntime.InvokeVoidAsync("BlazorJavascriptInterop.removeEventListener", element, type, callbackId);
+        var runtime = element.GetJSRuntime();
+        await runtime.InvokeVoidAsync(BlazorJavascriptInteropConstants.RemoEventListener, element, type, callbackId);
     }
 
-    internal static IJSRuntime? GetJSRuntime(this ElementReference elementReference)
+    public static async ValueTask SetPropertyAsync(this ElementReference element, string name, object value)
+    {
+        var runtime = element.GetJSRuntime();
+        await runtime.InvokeVoidAsync(BlazorJavascriptInteropConstants.SetProperty, element, name, value);
+    }
+
+    internal static IJSRuntime GetJSRuntime(this ElementReference elementReference)
     {
         if (elementReference.Context is WebElementReferenceContext context)
         {
-            var jsRuntime = GetJsRuntime(context);
-            return jsRuntime;
+            return GetJsRuntime(context);
         }
 
-        return null;
+        throw new InvalidOperationException("No JavaScript runtime found.");
     }
 
     private static async Task<IJSObjectReference> GetJsObjectReference(ElementReference element)
     {
-        var jsRuntime = GetJSRuntime(element) ?? throw new InvalidOperationException("No JavaScript runtime found.");
-        return await jsRuntime.InvokeAsync<IJSObjectReference>("BlazorJavascriptInterop.getReference", element);
+        var runtime = element.GetJSRuntime();
+        return await runtime.InvokeAsync<IJSObjectReference>(BlazorJavascriptInteropConstants.GetReference, element);
     }
 
     [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "<JSRuntime>k__BackingField")]
     private static extern ref IJSRuntime GetJsRuntime(WebElementReferenceContext context);
 
-    private static Dictionary<string, string> GetSerializationSpec<T>()
+    private static Dictionary<string, object> GetSerializationSpec<T>()
     {
-        return typeof(T)
-            .GetProperties()
-            .GroupBy(property => property.Name)
-            .ToDictionary(group => char.ToLower(group.Key[0]) + group.Key[1..], _ => "*");
+        return GetSerializationSpecRecursive(typeof(T));
+    }
+
+    private static Dictionary<string, object> GetSerializationSpecRecursive(Type type)
+    {
+        // Initialize a dictionary to store the serialization spec
+        var result = new Dictionary<string, object>();
+
+        // Iterate over the properties of the current type
+        foreach (var property in type.GetProperties())
+        {
+            // Convert the property name to camelCase
+            var propertyName = char.ToLower(property.Name[0]) + property.Name[1..];
+
+            // Check if the property type is a primitive, string, or value type (int, bool, etc.)
+            if (property.PropertyType.IsPrimitive || property.PropertyType == typeof(string) || property.PropertyType.IsValueType)
+            {
+                // Add the primitive or value type to the result with "*" as the value
+                result[propertyName] = "*";
+            }
+            else
+            {
+                // For complex types (non-primitive), recursively get their serialization spec
+                result[propertyName] = GetSerializationSpecRecursive(property.PropertyType);
+            }
+        }
+
+        return result;
     }
 }

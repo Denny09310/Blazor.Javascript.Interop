@@ -45,3 +45,17 @@ export function serialize<T extends Record<string, any>>(data: T, alreadySeriali
 
     return res as T;
 }
+
+export const traverse = (element: any, propertyPath: string): any => {
+    const properties = propertyPath.split('.');
+    let current = element;
+
+    for (let i = 0; i < properties.length - 1; i++) {
+        if (current == null || current[properties[i] as any] === undefined) {
+            throw new Error(`Property '${properties[i]}' is undefined or null on the object at path: '${properties.slice(0, i + 1).join('.')}'`);
+        }
+        current = current[properties[i] as any];
+    }
+
+    return { current, lastProperty: properties[properties.length - 1] };
+};

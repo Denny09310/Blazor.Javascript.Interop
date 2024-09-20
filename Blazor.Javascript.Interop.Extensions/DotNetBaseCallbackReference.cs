@@ -1,5 +1,4 @@
-﻿using Blazor.Javascript.Interop.Extensions;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
@@ -25,18 +24,11 @@ public class DotNetCallbackReference
 
     public static DotNetCallbackReference Create(Delegate @delegate, object serializationSpec)
     {
-        DotNetCallbackReference callback = new()
+        return new()
         {
             Callback = CreateCallback(@delegate),
             SerializationSpec = serializationSpec
         };
-
-        if (!DotNetCallbackRegistry.TryAdd(@delegate, callback.CallbackId))
-        {
-            throw new InvalidOperationException("Cannot add callback reference to the registry.");
-        }
-
-        return callback;
     }
 
     protected static object? CreateCallback(Delegate func)

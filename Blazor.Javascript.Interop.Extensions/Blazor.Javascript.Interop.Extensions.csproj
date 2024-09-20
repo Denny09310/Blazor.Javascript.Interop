@@ -9,7 +9,7 @@
 
 	<PropertyGroup>
 		<Title>$(AssemblyName)</Title>
-		<Version>0.0.12</Version>
+		<Version>1.0.2</Version>
 		<Authors>Koja Dennis</Authors>
 		<Description>Blazor.Javascript.Interop is a NuGet package designed as an extension library specifically for Blazor projects. It facilitates seamless interoperability between C# code in Blazor and JavaScript, empowering developers to incorporate JavaScript functionalities into their Blazor applications effortlessly.</Description>
 		<PackageProjectUrl>https://github.com/Denny09310/Blazor.Javascript.Interop</PackageProjectUrl>
@@ -19,7 +19,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	</PropertyGroup>
-
+	
 	<ItemGroup>
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
