@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Blazor.Javascript.Interop.Extensions.Helpers;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
@@ -18,9 +19,9 @@ public class DotNetCallbackReference
     [JsonPropertyName("__isCallBackReference")]
     public bool IsCallBackReference { get; set; } = true;
 
-    public object? SerializationSpec { get; set; } = "*";
+    public object? SerializationSpec { get; set; }
 
-    public static DotNetCallbackReference Create(Delegate @delegate) => Create(@delegate, "*");
+    public static DotNetCallbackReference Create(Delegate @delegate) => Create(@delegate, SerializationHelper.GetSerializationSpec<JSEvent>());
 
     public static DotNetCallbackReference Create(Delegate @delegate, object serializationSpec)
     {

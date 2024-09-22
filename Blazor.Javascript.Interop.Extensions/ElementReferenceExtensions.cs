@@ -1,4 +1,5 @@
 ﻿using Blazor.Javascript.Interop.Extensions;
+using Blazor.Javascript.Interop.Extensions.Helpers;
 using Microsoft.AspNetCore.Components;
 using System.Runtime.CompilerServices;
 
@@ -14,7 +15,7 @@ public static class ElementReferenceExtensions
 
     public static async ValueTask<string> AddEventListenerAsync<T>(this ElementReference element, string type, Action<T> callback)
     {
-        var serializationSpec = GetSerializationSpec<T>();
+        var serializationSpec = SerializationHelper.GetSerializationSpec<T>();
 
         var runtime = element.GetJSRuntime();
         return await runtime.InvokeAsync<string>(BlazorJavascriptInteropConstants.AddEventListener, element, type, DotNetCallbackReference.Create(callback, serializationSpec));
@@ -34,7 +35,7 @@ public static class ElementReferenceExtensions
 
     public static async ValueTask<string> AddEventListenerAsync<T>(this ElementReference element, string type, Func<T, ValueTask> callback)
     {
-        var serializationSpec = GetSerializationSpec<T>();
+        var serializationSpec = SerializationHelper.GetSerializationSpec<T>();
 
         var runtime = element.GetJSRuntime();
         return await runtime.InvokeAsync<string>(BlazorJavascriptInteropConstants.AddEventListener, element, type, DotNetCallbackReference.Create(callback, serializationSpec));
@@ -94,36 +95,4 @@ public static class ElementReferenceExtensions
 
     [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "<JSRuntime>k__BackingField")]
     private static extern ref IJSRuntime GetJsRuntime(WebElementReferenceContext context);
-
-    private static Dictionary<string, object> GetSerializationSpec<T>()
-    {
-        return GetSerializationSpecRecursive(typeof(T));
-    }
-
-    private static Dictionary<string, object> GetSerializationSpecRecursive(Type type)
-    {
-        // Initialize a dictionary to store the serialization spec
-        var result = new Dictionary<string, object>();
-
-        // Iterate over the properties of the current type
-        foreach (var property in type.GetProperties())
-        {
-            // Convert the property name to camelCase
-            var propertyName = char.ToLower(property.Name[0]) + property.Name[1..];
-
-            // Check if the property type is a primitive, string, or value type (int, bool, etc.)
-            if (property.PropertyType.IsPrimitive || property.PropertyType == typeof(string) || property.PropertyType.IsValueType)
-            {
-                // Add the primitive or value type to the result with "*" as the value
-                result[propertyName] = "*";
-            }
-            else
-            {
-                // For complex types (non-primitive), recursively get their serialization spec
-                result[propertyName] = GetSerializationSpecRecursive(property.PropertyType);
-            }
-        }
-
-        return result;
-    }
 }
